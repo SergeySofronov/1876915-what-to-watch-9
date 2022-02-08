@@ -1,8 +1,8 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Сергей Софронов](https://up.htmlacademy.ru/react/9/user/1876915).
-* Наставник: `Неизвестно`.
-
+* Наставник: [Егор Дьяченко](https://htmlacademy.ru/profile/semperhomolupus).
+* Проект: ["Что посмотреть"](https://sergeysofronov.github.io/1876915-what-to-watch-9/).
 ---
 
 _Не удаляйте и не изменяйте папки и файлы:_
