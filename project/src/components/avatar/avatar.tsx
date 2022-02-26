@@ -17,7 +17,7 @@ function Avatar({ authorizationStatus }: AvatarProps): JSX.Element {
   return (
     <ul className="user-block">
       <li className="user-block__item">
-        {authorizationStatus === AuthorizationStatus.Auth ? getUserAvatar() : null}
+        {authorizationStatus === AuthorizationStatus.Auth && getUserAvatar()}
       </li>
       <li className="user-block__item">
         <Link to={AppRoute.SignIn} className="user-block__link">{authorizationStatus === AuthorizationStatus.Auth ? 'Sign out' : 'Sign in'}</Link>

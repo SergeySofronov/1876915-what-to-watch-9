@@ -18,7 +18,7 @@ function MoviePage(): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <Logo isLogoLight={false} />
+            <Logo />
             <Avatar authorizationStatus={AuthorizationStatus.NoAuth} />
           </header>
 

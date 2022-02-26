@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type PropsTypes = {
-  isLogoLight: boolean;
+  isLogoLight?: boolean;
 };
 
-function Logo({ isLogoLight }: PropsTypes): JSX.Element {
+function Logo({ isLogoLight = false }: PropsTypes): JSX.Element {
   return (
     <div className="logo">
       <Link to={AppRoute.Main} className={`logo__link ${isLogoLight ? 'logo__link--light' : ''}`}>

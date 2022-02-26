@@ -29,9 +29,7 @@ function App(props: PropsTypes): JSX.Element {
         />
         <Route path={AppRoute.SignIn} element={<SignInPage />} />
         <Route path={AppRoute.AddReview} element={<ReviewPage />} />
-        <Route path={AppRoute.Film} element={<MoviePage />}>
-          {/* todo: movie-page-description, -details, -rating */}
-        </Route>
+        <Route path={AppRoute.Film} element={<MoviePage />} />
         <Route path={AppRoute.Player} element={<PlayerPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

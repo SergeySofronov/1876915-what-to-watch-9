@@ -5,7 +5,7 @@ function NotFoundPage(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo isLogoLight={false} />
+        <Logo />
       </header>
 
       <div className="user-page__content">

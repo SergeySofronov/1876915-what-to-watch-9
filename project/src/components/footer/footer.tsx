@@ -1,11 +1,12 @@
 import Logo from '../logo/logo';
 
 function Footer(): JSX.Element {
+  const date = new Date().getFullYear();
   return (
     <footer className="page-footer">
       <Logo isLogoLight />
       <div className="copyright">
-        <p>© 2019 What to watch Ltd.</p>
+        <p>© {date} What to watch Ltd.</p>
       </div>
     </footer>
   );
