@@ -1,4 +1,4 @@
-const FILM_QUANTITY = 20;
+const MINUTES_IN_HOUR = 60;
 
 enum AppRoute {
   Main = '/',
@@ -15,4 +15,4 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export { FILM_QUANTITY, AppRoute, AuthorizationStatus };
+export { MINUTES_IN_HOUR, AppRoute, AuthorizationStatus };
