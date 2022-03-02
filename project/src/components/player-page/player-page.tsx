@@ -19,7 +19,7 @@ function PlayerPage({ mocks }: PropsTypes): JSX.Element {
   const minutes = film.runTime % MINUTES_IN_HOUR;
   return (
     <div className="player">
-      <video src={film?.videoLink} className="player__video" poster={film?.posterImage}></video>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
       <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
 
@@ -39,7 +39,7 @@ function PlayerPage({ mocks }: PropsTypes): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{film?.name}</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

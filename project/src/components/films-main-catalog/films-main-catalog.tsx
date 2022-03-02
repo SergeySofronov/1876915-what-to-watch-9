@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
-import FilmList from '../film-list/film-list';
+import FilmsList from '../film-list/film-list';
 
 type PropsTypes = {
   mocks: FilmsDataType;
@@ -45,7 +45,7 @@ function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
         </li>
       </ul>
 
-      <FilmList mocks={mocks} />
+      <FilmsList mocks={mocks} />
 
       <div className="catalog__more">
         <button className="catalog__button" type="button">Show more</button>
