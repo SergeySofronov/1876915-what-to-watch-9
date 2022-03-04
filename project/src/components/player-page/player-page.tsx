@@ -1,19 +1,35 @@
-//todo: <div className="player__toggler" style="left: 30%;">Toggler</div>
+import { useNavigate, useParams } from 'react-router-dom';
+import { FilmsDataType } from '../../types/film-type';
+import { AppRoute, MINUTES_IN_HOUR } from '../../const';
+import NotFoundPage from '../not-found-page/not-found-page';
 
-function PlayerPage(): JSX.Element {
+type PropsTypes = {
+  mocks: FilmsDataType;
+};
+
+function PlayerPage({ mocks }: PropsTypes): JSX.Element {
+  const navigate = useNavigate();
+  const id = Number(useParams().id);
+  const film = mocks.find((mock) => mock.id === id);
+  if (!film) {
+    return <NotFoundPage />;
+  }
+
+  const hours = Math.floor(film.runTime / MINUTES_IN_HOUR);
+  const minutes = film.runTime % MINUTES_IN_HOUR;
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
             <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler">Toggler</div>
+            <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{`${hours}:${minutes}:00`}</div>
         </div>
 
         <div className="player__controls-row">
@@ -23,7 +39,7 @@ function PlayerPage(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">Transpotting</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

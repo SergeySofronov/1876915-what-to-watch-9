@@ -10,27 +10,27 @@ import MyListPage from '../my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 
+import { FilmsDataType } from '../../types/film-type';
+
 type PropsTypes = {
-  promoProps: {
-    [props: string]: string;
-  }
+  mocks: FilmsDataType;
 };
 
-function App(props: PropsTypes): JSX.Element {
+function App({ mocks }: PropsTypes): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainPage promoProps={props.promoProps} />} />
+        <Route path={AppRoute.Main} element={<MainPage mocks={mocks} />} />
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <MyListPage />
+          <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <MyListPage mocks={mocks} />
           </PrivateRoute>
         }
         />
         <Route path={AppRoute.SignIn} element={<SignInPage />} />
-        <Route path={AppRoute.AddReview} element={<ReviewPage />} />
-        <Route path={AppRoute.Film} element={<MoviePage />} />
-        <Route path={AppRoute.Player} element={<PlayerPage />} />
+        <Route path={AppRoute.AddReview} element={<ReviewPage mocks={mocks} />} />
+        <Route path={AppRoute.Film} element={<MoviePage mocks={mocks}/>} />
+        <Route path={AppRoute.Player} element={<PlayerPage mocks={mocks} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter >

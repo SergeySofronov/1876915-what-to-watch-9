@@ -2,14 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
-const PromoFilmProps = {
-  NAME: 'Johnny English',
-  GENRE: 'Comedy',
-  YEAR: '1902',
-};
+import {FilmsData} from '../src/mocks/films';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App promoProps={PromoFilmProps} />
+    <App mocks={FilmsData} />
   </React.StrictMode>,
   document.getElementById('root'));
