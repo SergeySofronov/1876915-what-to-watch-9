@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
-import { AppRoute, MINUTES_IN_HOUR } from '../../const';
+import { MINUTES_IN_HOUR } from '../../const';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type PropsTypes = {
@@ -21,7 +21,7 @@ function PlayerPage({ mocks }: PropsTypes): JSX.Element {
     <div className="player">
       <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
-      <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
+      <button type="button" className="player__exit" onClick={() => navigate(-1)}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

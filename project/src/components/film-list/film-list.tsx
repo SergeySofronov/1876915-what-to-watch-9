@@ -1,7 +1,7 @@
-import React from 'react';
 import { useState } from 'react';
-import { FilmsDataType, FilmType } from '../../types/film-type';
+import { FilmsDataType } from '../../types/film-type';
 import FilmCard from '../film-card/film-card';
+
 
 type PropsTypes = {
   mocks: FilmsDataType;
@@ -9,16 +9,13 @@ type PropsTypes = {
 
 function FilmsList({ mocks }: PropsTypes): JSX.Element {
 
-  const [activeFilm, setActiveFilm] = useState(mocks[0]);
+  const [activeFilmId, setActiveFilm] = useState(NaN);
 
-  const updateActiveFilm = (film: FilmType) => {
-    setActiveFilm({ ...activeFilm, ...film });
-  };
-
+  const updateActiveFilm = (id: number) => setActiveFilm(id);
 
   return (
     <div className="catalog__films-list" >
-      {mocks.map((film) => <FilmCard film={film} key={film.id} update={updateActiveFilm} />)}
+      {mocks.map((film) => <FilmCard film={film} key={film.id} update={updateActiveFilm} isActiveFilm={activeFilmId === film.id} />)}
     </div >
   );
 }
