@@ -1,7 +1,7 @@
-import MainPage from '../main-page/main-page';
-import { AppRoute, AuthorizationStatus } from '../../const';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
+import MainPage from '../main-page/main-page';
 import ReviewPage from '../review-page/review-page';
 import PlayerPage from '../player-page/player-page';
 import SignInPage from '../sign-in-page/sign-in-page';
@@ -29,7 +29,7 @@ function App({ mocks }: PropsTypes): JSX.Element {
         />
         <Route path={AppRoute.SignIn} element={<SignInPage />} />
         <Route path={AppRoute.AddReview} element={<ReviewPage mocks={mocks} />} />
-        <Route path={AppRoute.Film} element={<MoviePage mocks={mocks}/>} />
+        <Route path={AppRoute.Film} element={<MoviePage mocks={mocks} />} />
         <Route path={AppRoute.Player} element={<PlayerPage mocks={mocks} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>

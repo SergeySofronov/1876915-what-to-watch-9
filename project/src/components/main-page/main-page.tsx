@@ -1,10 +1,10 @@
-import Logo from '../logo/logo';
-import Avatar from '../avatar/avatar';
 import React from 'react';
-import FilmsMainCatalog from '../films-main-catalog/films-main-catalog';
-import Footer from '../footer/footer';
 import { AuthorizationStatus } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
+import Logo from '../logo/logo';
+import Avatar from '../avatar/avatar';
+import Footer from '../footer/footer';
+import FilmsMainCatalog from '../films-main-catalog/films-main-catalog';
 import FilmDescription from '../film-description/film-description';
 
 type PropsTypes = {
@@ -15,7 +15,7 @@ function MainPage({ mocks }: PropsTypes): JSX.Element {
   const film: FilmType = mocks[0];
   return (
     <React.Fragment>
-      <section className="film-card">
+      <section className="film-card" >
         <div className="film-card__bg">
           <img src={film.backgroundImage} alt={film.name} />
         </div>

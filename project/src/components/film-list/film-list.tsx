@@ -11,7 +11,7 @@ function FilmsList({ mocks }: PropsTypes): JSX.Element {
 
   const [activeFilmId, setActiveFilm] = useState(NaN);
 
-  const updateActiveFilm = (id: number) => setActiveFilm(id);
+  const updateActiveFilm = (id = NaN) => setActiveFilm(id);
 
   return (
     <div className="catalog__films-list" >

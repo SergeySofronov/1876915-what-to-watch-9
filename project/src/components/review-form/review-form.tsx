@@ -20,7 +20,7 @@ function ReviewForm({ film }: PropsTypes): JSX.Element {
   };
 
   return (
-    <div className="add-review">
+    <div className="add-review" >
       <form action="#" className="add-review__form" onSubmit={onFormSubmit}>
         <div className="rating">
           <div className="rating__stars">
@@ -28,7 +28,7 @@ function ReviewForm({ film }: PropsTypes): JSX.Element {
           </div>
         </div>
 
-        <div className="add-review__text">
+        <div className="add-review__text" style={{ backgroundColor: 'whitesmoke'}}>
           <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={textState} onChange={onTextAreaChange}></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit" >Post</button>
@@ -41,3 +41,5 @@ function ReviewForm({ film }: PropsTypes): JSX.Element {
 }
 
 export default ReviewForm;
+
+
