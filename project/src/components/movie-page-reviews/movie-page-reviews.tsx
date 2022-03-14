@@ -1,85 +1,49 @@
-function MoviePageReviews(): JSX.Element {
+import { useEffect, useState } from 'react';
+import { FilmType } from '../../types/film-type';
+import { CommentType } from '../../types/comment-type';
+import { getRgbaColor } from '../../utils';
+
+type PropsTypes = {
+  film: FilmType;
+};
+
+const getCommentComponent = (comment: CommentType, color: string) => {
+  const date = new Date(comment.date);
+  return (
+    <div key={comment.id} className="review" style={{ borderColor: color }}>
+      <blockquote className="review__quote">
+        <p className="review__text">{comment.comment}</p>
+
+        <footer className="review__details">
+          <cite className="review__author">{comment.user.name}</cite>
+          <time className="review__date" dateTime={comment.date}>{`${date.getMonth()} ${date.getDay()}, ${date.getFullYear()}`}</time>
+        </footer>
+      </blockquote>
+      <div className="review__rating">{comment.rating}</div>
+    </div>
+  );
+};
+
+function MoviePageReviews({ film }: PropsTypes): JSX.Element {
+
+  const [comments, setComments] = useState([]);
+  const halfLength = Math.round(comments.length / 2);
+  const firstPart = comments.slice(0, halfLength);
+  const secondPart = comments.slice(halfLength);
+
+  useEffect(() => {
+    fetch(`https://9.react.pages.academy/wtw/comments/${film.id}`)
+      .then((response) => response.json())
+      .then((commentList) => setComments(commentList));
+  }, [film.id]);
+
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director&#39s funniest and most exquisitely designed films in years.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Kate Muir</cite>
-              <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,9</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">Anderson&#39s films are too precious for some, but for those of us willing to lose ourselves in them, they&#39re a delight. &#34The Grand Budapest Hotel&#34 is no different, except that he has added a hint of gravitas to the mix, improving the recipe.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Bill Goodykoontz</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,0</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">I didn&#39t find it amusing, and while I can appreciate the creativity, it&#39s an hour and 40 minutes I wish I could take back.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Amanda Greever</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">8,0</div>
-        </div>
+        {firstPart.map((comment) => getCommentComponent(comment, getRgbaColor(film.backgroundColor, 0.5)))}
       </div>
       <div className="film-card__reviews-col">
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Matthew Lickona</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">7,2</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">7,6</div>
-        </div>
-
-        <div className="review">
-          <blockquote className="review__quote">
-            <p className="review__text">It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.</p>
-
-            <footer className="review__details">
-              <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
-            </footer>
-          </blockquote>
-
-          <div className="review__rating">7,0</div>
-        </div>
+        {secondPart.map((comment) => getCommentComponent(comment, getRgbaColor(film.backgroundColor, 0.5)))}
       </div>
     </div>
   );

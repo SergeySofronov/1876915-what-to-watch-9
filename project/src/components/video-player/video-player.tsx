@@ -1,13 +1,13 @@
-import { FilmType } from '../../types/film-type';
 import { useEffect, useRef } from 'react';
+import { FilmType } from '../../types/film-type';
 import { VIDEO_PREVIEW_DELAY } from '../../const';
 
 type PropsTypes = {
   film: FilmType;
-  isActiveFilm: boolean;
+  isActiveFilm?: boolean;
 };
 
-function VideoPlayer({ film, isActiveFilm = false }: PropsTypes): JSX.Element {
+function VideoPlayer({ film, isActiveFilm }: PropsTypes): JSX.Element {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
 

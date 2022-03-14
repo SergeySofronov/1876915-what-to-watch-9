@@ -1,29 +1,57 @@
-import React from 'react';
+import React, { MouseEventHandler, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
+import { FilmsDataType, FilmType } from '../../types/film-type';
+import { FilmTabNames } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
-import { NavLink, Link, Outlet, useParams } from 'react-router-dom';
-import { AuthorizationStatus } from '../../const';
-import { FilmsDataType } from '../../types/film-type';
 import NotFoundPage from '../not-found-page/not-found-page';
 import FilmDescription from '../film-description/film-description';
 import FilmsList from '../film-list/film-list';
-
+import FilmTabs from '../../film-tabs/film-tabs';
+import MoviePageOverview from '../movie-page-overview/movie-page-overview';
+import MoviePageDetails from '../movie-page-details/movie-page-details';
+import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 
 type PropsTypes = {
   mocks: FilmsDataType;
 };
 
+const getTabContent = (activeTab: string, film: FilmType) => {
+  const [overview, details, reviews] = FilmTabNames;
+  switch (activeTab) {
+    case overview:
+      return <MoviePageOverview film={film} />;
+    case details:
+      return <MoviePageDetails film={film} />;
+    case reviews:
+      return <MoviePageReviews film={film} />;
+  }
+};
+
+
 function MoviePage({ mocks }: PropsTypes): JSX.Element {
+  const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
   const id = Number(useParams().id);
   const film = mocks.find((mock) => mock.id === id);
   if (!film) {
     return <NotFoundPage />;
   }
 
+  const tabChangeHandler: MouseEventHandler = (evt) => {
+    const target = evt.target as HTMLAnchorElement;
+    const tagName = target.tagName;
+    const tagText = target.textContent;
+
+    if ((tagName === 'A') && (activeTab !== tagText)) {
+      setActiveTab(tagText ? tagText : '');
+    }
+  };
+
   return (
     <React.Fragment>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={{ backgroundColor: film.backgroundColor }}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={film.backgroundImage} alt={film.name} />
@@ -51,30 +79,19 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <NavLink to="#" className="film-nav__link">Overview</NavLink>
-                  </li>
-                  <li className="film-nav__item">
-                    <NavLink to="#" className="film-nav__link">Details</NavLink>
-                  </li>
-                  <li className="film-nav__item">
-                    <NavLink to="#" className="film-nav__link">Reviews</NavLink>
-                  </li>
-                </ul>
+                <FilmTabs textContent={FilmTabNames} className={'film-nav__'} tabChangeHandler={tabChangeHandler} activeTab={activeTab} />
               </nav>
-
+              {getTabContent(activeTab, film)}
             </div>
           </div>
         </div>
       </section>
 
-      <Outlet />
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList mocks={mocks.filter((mock) => (mock.genre === film.genre))} />
+          <FilmsList mocks={mocks.filter((mock) => (mock.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
         </section>
         <Footer />
       </div>
