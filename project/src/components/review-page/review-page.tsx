@@ -1,11 +1,10 @@
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
 import { AuthorizationStatus } from '../../const';
-import Avatar from '../avatar/avatar';
 import Logo from '../logo/logo';
-import NotFoundPage from '../not-found-page/not-found-page';
+import Avatar from '../avatar/avatar';
 import ReviewForm from '../review-form/review-form';
+import NotFoundPage from '../not-found-page/not-found-page';
 
 type PropsTypes = {
   mocks: FilmsDataType;
@@ -19,7 +18,7 @@ function ReviewPage({ mocks }: PropsTypes): JSX.Element {
   }
 
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{ backgroundColor: film.backgroundColor }}>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={film.backgroundImage} alt={film.name} />

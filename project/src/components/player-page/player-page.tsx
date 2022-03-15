@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
-import { AppRoute, MINUTES_IN_HOUR } from '../../const';
+import { getFilmRuntime, getRgbaColor } from '../../utils';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type PropsTypes = {
@@ -15,13 +15,13 @@ function PlayerPage({ mocks }: PropsTypes): JSX.Element {
     return <NotFoundPage />;
   }
 
-  const hours = Math.floor(film.runTime / MINUTES_IN_HOUR);
-  const minutes = film.runTime % MINUTES_IN_HOUR;
+  const [hours, minutes] = getFilmRuntime(film.runTime);
+
   return (
     <div className="player">
       <video src={film.videoLink} className="player__video" poster={film.posterImage}></video>
 
-      <button type="button" className="player__exit" onClick={() => navigate(AppRoute.Main)}>Exit</button>
+      <button type="button" className="player__exit" onClick={() => navigate(-1)}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -29,7 +29,7 @@ function PlayerPage({ mocks }: PropsTypes): JSX.Element {
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" style={{ left: '30%' }}>Toggler</div>
           </div>
-          <div className="player__time-value">{`${hours}:${minutes}:00`}</div>
+          <div className="player__time-value" style={{color:getRgbaColor(film.backgroundColor, 0.5)}}>{`${hours}:${minutes}:00`}</div>
         </div>
 
         <div className="player__controls-row">
