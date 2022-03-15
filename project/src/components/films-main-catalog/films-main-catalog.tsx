@@ -19,7 +19,7 @@ function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
   const genres = getFilmGenres(mocks);
   const [activeTab, setActiveTab] = useState(genres[0]);
 
-  //todo: нужно как-то убрать это в HOC/HOF
+  //todo: нужно как-то убрать это в HOC/HOF т.к. тот же код есть в movie-page.tsx
   const tabChangeHandler: MouseEventHandler = (evt) => {
     const target = evt.target as HTMLAnchorElement;
     const tagName = target.tagName;
@@ -35,39 +35,6 @@ function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
       <FilmTabs textContent={genres} className={'catalog__genres-'} tabChangeHandler={tabChangeHandler} activeTab={activeTab} />
-      {/* <ul className="catalog__genres-list">
-        <li className="catalog__genres-item catalog__genres-item--active">
-          <NavLink to="#" className="catalog__genres-link">All genres</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Comedies</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Crime</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Documentary</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Dramas</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Horror</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Kids & Family</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Romance</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Sci-Fi</NavLink >
-        </li>
-        <li className="catalog__genres-item">
-          <NavLink to="#" className="catalog__genres-link">Thrillers</NavLink >
-        </li>
-      </ul> */}
-
       <FilmsList mocks={mocks} />
 
       <div className="catalog__more">
