@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
@@ -13,6 +13,8 @@ import FilmTabs from '../../film-tabs/film-tabs';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setActiveFilmTab } from '../../store/action';
 
 type PropsTypes = {
   mocks: FilmsDataType;
@@ -30,24 +32,14 @@ const getTabContent = (activeTab: string, film: FilmType) => {
   }
 };
 
-
 function MoviePage({ mocks }: PropsTypes): JSX.Element {
-  const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
+  const dispatch = useAppDispatch();
+  const activeTab = useAppSelector((state) => state.activeFilmTab);
   const id = Number(useParams().id);
   const film = mocks.find((mock) => mock.id === id);
   if (!film) {
     return <NotFoundPage />;
   }
-
-  const tabChangeHandler: MouseEventHandler = (evt) => {
-    const target = evt.target as HTMLAnchorElement;
-    const tagName = target.tagName;
-    const tagText = target.textContent;
-
-    if ((tagName === 'A') && (activeTab !== tagText)) {
-      setActiveTab(tagText ? tagText : '');
-    }
-  };
 
   return (
     <React.Fragment>
@@ -79,7 +71,12 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <FilmTabs textContent={FilmTabNames} className={'film-nav__'} tabChangeHandler={tabChangeHandler} activeTab={activeTab} />
+                <FilmTabs
+                  textContent={FilmTabNames}
+                  className={'film-nav__'}
+                  tabChangeHandler={(tabName) => dispatch(setActiveFilmTab({ activeFilmTab: tabName }))}
+                  activeTab={activeTab}
+                />
               </nav>
               {getTabContent(activeTab, film)}
             </div>
