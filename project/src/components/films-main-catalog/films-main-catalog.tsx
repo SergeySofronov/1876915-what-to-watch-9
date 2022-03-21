@@ -1,20 +1,21 @@
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useActiveFilmSelector } from '../../hooks/selectors';
+import { setActiveFilmGenre } from '../../store/action';
 import { FilmsDataType } from '../../types/film-type';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveFilmGenre } from '../../store/action';
 import FilmTabs from '../../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
 import ShowMoreButton from '../../show-more-button/show-more-button';
-import { useState } from 'react';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
 
-const getAllFilmGenres = (mocks: FilmsDataType): string[] => {
+const getAllFilmGenres = (films: FilmsDataType): string[] => {
   const genres = new Set<string>([FILM_GENRE_DEFAULT]);
-  mocks.forEach((mock) => genres.add(mock.genre));
+  films.forEach((film) => genres.add(film.genre));
 
   return ([...genres.keys()]);
 };
@@ -29,12 +30,12 @@ const isButtonStatusChanged = (films: FilmsDataType, tabName: string) => {
   return filteredFilms.length > getMaxQuantityToShow(filteredFilms);
 };
 
-function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
-  const dispatch = useAppDispatch();
-  const genres = getAllFilmGenres(mocks);
-  const activeTab = useAppSelector((state) => state.activeFilmGenre);
-  const [shownFilmsQuantity, setFilmQuantity] = useState(getFilteredFilmsQuantity(mocks, activeTab));
-  const [isButtonShown, setButtonStatus] = useState(isButtonStatusChanged(mocks, activeTab));
+function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
+  const dispatch = useDispatch();
+  const activeTab = useActiveFilmSelector();
+  const genres = getAllFilmGenres(films);
+  const [shownFilmsQuantity, setFilmQuantity] = useState(getFilteredFilmsQuantity(films, activeTab));
+  const [isButtonShown, setButtonStatus] = useState(isButtonStatusChanged(films, activeTab));
 
   return (
     <section className="catalog">
@@ -44,19 +45,19 @@ function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
         textContent={genres}
         className={'catalog__genres-'}
         tabChangeHandler={(tabName) => {
-          setButtonStatus(isButtonStatusChanged(mocks, tabName));
-          setFilmQuantity(getFilteredFilmsQuantity(mocks, tabName));
+          setButtonStatus(isButtonStatusChanged(films, tabName));
+          setFilmQuantity(getFilteredFilmsQuantity(films, tabName));
           dispatch(setActiveFilmGenre({ activeFilmGenre: tabName }));
         }}
         activeTab={activeTab}
       />
-      <FilmsList mocks={getFilmsByGenre(mocks, activeTab).slice(0, shownFilmsQuantity)} />
+      <FilmsList films={getFilmsByGenre(films, activeTab).slice(0, shownFilmsQuantity)} />
 
       {
         isButtonShown &&
         <ShowMoreButton
           buttonClickHandler={() => {
-            let rest = getFilmsByGenre(mocks, activeTab).length - shownFilmsQuantity;
+            let rest = getFilmsByGenre(films, activeTab).length - shownFilmsQuantity;
 
             if (rest > 0) {
               setButtonStatus(rest > FILM_MAIN_PAGE_MAX);

@@ -7,12 +7,12 @@ import ReviewForm from '../review-form/review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
-function ReviewPage({ mocks }: PropsTypes): JSX.Element {
+function ReviewPage({ films }: PropsTypes): JSX.Element {
   const id = Number(useParams().id);
-  const film = mocks.find((mock) => mock.id === id);
+  const film = films.find((filmItem) => filmItem.id === id);
   if (!film) {
     return <NotFoundPage />;
   }

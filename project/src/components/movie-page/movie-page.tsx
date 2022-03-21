@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
@@ -13,11 +13,9 @@ import FilmTabs from '../../film-tabs/film-tabs';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveFilmTab } from '../../store/action';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
 const getTabContent = (activeTab: string, film: FilmType) => {
@@ -32,14 +30,17 @@ const getTabContent = (activeTab: string, film: FilmType) => {
   }
 };
 
-function MoviePage({ mocks }: PropsTypes): JSX.Element {
-  const dispatch = useAppDispatch();
-  const activeTab = useAppSelector((state) => state.activeFilmTab);
+function MoviePage({ films }: PropsTypes): JSX.Element {
+  const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
   const id = Number(useParams().id);
-  const film = mocks.find((mock) => mock.id === id);
+  const film = films.find((filmItem) => filmItem.id === id);
+
+  useEffect(() => setActiveTab(FilmTabNames[0]), [film?.id]);
+
   if (!film) {
     return <NotFoundPage />;
   }
+
 
   return (
     <React.Fragment>
@@ -74,7 +75,7 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
                 <FilmTabs
                   textContent={FilmTabNames}
                   className={'film-nav__'}
-                  tabChangeHandler={(tabName) => dispatch(setActiveFilmTab({ activeFilmTab: tabName }))}
+                  tabChangeHandler={(tabName) => setActiveTab(tabName)}
                   activeTab={activeTab}
                 />
               </nav>
@@ -88,7 +89,7 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList mocks={mocks.filter((mock) => (mock.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
+          <FilmsList films={films.filter((filmItem) => (filmItem.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
         </section>
         <Footer />
       </div>

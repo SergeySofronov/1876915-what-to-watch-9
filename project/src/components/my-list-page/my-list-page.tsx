@@ -7,10 +7,10 @@ import FilmsList from '../film-list/film-list';
 
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
-function MyListPage({ mocks }: PropsTypes): JSX.Element {
+function MyListPage({ films }: PropsTypes): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -21,7 +21,7 @@ function MyListPage({ mocks }: PropsTypes): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmsList mocks={mocks} />
+        <FilmsList films={films} />
 
       </section>
       <Footer />
