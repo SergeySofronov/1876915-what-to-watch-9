@@ -1,45 +1,73 @@
-import { MouseEventHandler, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useActiveFilmSelector } from '../../hooks/selectors';
+import { setActiveFilmGenre } from '../../store/action';
 import { FilmsDataType } from '../../types/film-type';
+import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
 import FilmTabs from '../../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
+import ShowMoreButton from '../../show-more-button/show-more-button';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
-const getFilmGenres = (mocks: FilmsDataType): string[] => {
-  const genres = new Set<string>();
-  mocks.forEach((mock) => genres.add(mock.genre));
+
+const getAllFilmGenres = (films: FilmsDataType): string[] => {
+  const genres = new Set<string>([FILM_GENRE_DEFAULT]);
+  films.forEach((film) => genres.add(film.genre));
 
   return ([...genres.keys()]);
 };
 
-function FilmsMainCatalog({ mocks }: PropsTypes): JSX.Element {
+const getFilmsByGenre = (films: FilmsDataType, activeTab: string) => activeTab === FILM_GENRE_DEFAULT ? films : films.filter((film) => (film.genre === activeTab));
+const getMaxQuantityToShow = (films: FilmsDataType) => films.length > FILM_MAIN_PAGE_MAX ? FILM_MAIN_PAGE_MAX : films.length;
+const getFilteredFilmsQuantity = (films: FilmsDataType, activeTab: string) => getMaxQuantityToShow(getFilmsByGenre(films, activeTab));
 
-  const genres = getFilmGenres(mocks);
-  const [activeTab, setActiveTab] = useState(genres[0]);
+const isButtonStatusChanged = (films: FilmsDataType, tabName: string) => {
+  const filteredFilms = getFilmsByGenre(films, tabName);
 
-  //todo: нужно как-то убрать это в HOC/HOF т.к. тот же код есть в movie-page.tsx
-  const tabChangeHandler: MouseEventHandler = (evt) => {
-    const target = evt.target as HTMLAnchorElement;
-    const tagName = target.tagName;
-    const tagText = target.textContent;
+  return filteredFilms.length > getMaxQuantityToShow(filteredFilms);
+};
 
-    if ((tagName === 'A') && (activeTab !== tagText)) {
-      setActiveTab(tagText ? tagText : '');
-    }
-  };
+function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
+  const dispatch = useDispatch();
+  const activeTab = useActiveFilmSelector();
+  const genres = getAllFilmGenres(films);
+  const [shownFilmsQuantity, setFilmQuantity] = useState(getFilteredFilmsQuantity(films, activeTab));
+  const [isButtonShown, setButtonStatus] = useState(isButtonStatusChanged(films, activeTab));
 
   return (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <FilmTabs textContent={genres} className={'catalog__genres-'} tabChangeHandler={tabChangeHandler} activeTab={activeTab} />
-      <FilmsList mocks={mocks} />
+      <FilmTabs
+        textContent={genres}
+        className={'catalog__genres-'}
+        tabChangeHandler={(tabName) => {
+          setButtonStatus(isButtonStatusChanged(films, tabName));
+          setFilmQuantity(getFilteredFilmsQuantity(films, tabName));
+          dispatch(setActiveFilmGenre({ activeFilmGenre: tabName }));
+        }}
+        activeTab={activeTab}
+      />
+      <FilmsList films={getFilmsByGenre(films, activeTab).slice(0, shownFilmsQuantity)} />
 
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
+      {
+        isButtonShown &&
+        <ShowMoreButton
+          buttonClickHandler={() => {
+            let rest = getFilmsByGenre(films, activeTab).length - shownFilmsQuantity;
+
+            if (rest > 0) {
+              setButtonStatus(rest > FILM_MAIN_PAGE_MAX);
+              rest = rest < FILM_MAIN_PAGE_MAX ? rest : FILM_MAIN_PAGE_MAX;
+              rest += shownFilmsQuantity;
+              setFilmQuantity(rest);
+            }
+          }}
+        />
+      }
     </section>
   );
 }

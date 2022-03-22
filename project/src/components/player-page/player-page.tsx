@@ -4,13 +4,13 @@ import { getFilmRuntime, getRgbaColor } from '../../utils';
 import NotFoundPage from '../not-found-page/not-found-page';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
-function PlayerPage({ mocks }: PropsTypes): JSX.Element {
+function PlayerPage({ films }: PropsTypes): JSX.Element {
   const navigate = useNavigate();
   const id = Number(useParams().id);
-  const film = mocks.find((mock) => mock.id === id);
+  const film = films.find((filmItem) => filmItem.id === id);
   if (!film) {
     return <NotFoundPage />;
   }

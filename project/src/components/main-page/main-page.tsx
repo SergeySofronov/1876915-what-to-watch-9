@@ -8,11 +8,11 @@ import FilmsMainCatalog from '../films-main-catalog/films-main-catalog';
 import FilmDescription from '../film-description/film-description';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
-function MainPage({ mocks }: PropsTypes): JSX.Element {
-  const film: FilmType = mocks[0];
+function MainPage({ films }: PropsTypes): JSX.Element {
+  const film: FilmType = films[0];
   return (
     <React.Fragment>
       <section className="film-card" >
@@ -37,7 +37,7 @@ function MainPage({ mocks }: PropsTypes): JSX.Element {
         </div>
       </section>
       <div className="page-content">
-        <FilmsMainCatalog mocks={mocks} />
+        <FilmsMainCatalog films={films} />
         <Footer />
       </div >
     </React.Fragment>

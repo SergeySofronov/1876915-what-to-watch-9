@@ -1,8 +1,11 @@
 const MINUTES_IN_HOUR = 60;
 const FILM_RATING_MAX = 10;
 const VIDEO_PREVIEW_DELAY = 1000;
+const FILM_MAIN_PAGE_MAX = 8;
 const FILM_LIKE_THIS_MAX = 4;
 const FILM_STARRING_MAX = 4;
+const FILM_GENRE_DEFAULT = 'All genres';
+const FILM_TAB_DEFAULT = 'Overview';
 
 enum AppRoute {
   Main = '/',
@@ -35,14 +38,17 @@ const FilmScores = {
   AWESOME: 10,
 };
 
-const FilmTabNames = ['Overview', 'Details', 'Reviews'];
+const FilmTabNames = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
 
 export {
-  MINUTES_IN_HOUR,
   FILM_RATING_MAX,
-  VIDEO_PREVIEW_DELAY,
   FILM_LIKE_THIS_MAX,
+  FILM_GENRE_DEFAULT,
+  FILM_MAIN_PAGE_MAX,
   FILM_STARRING_MAX,
+  FILM_TAB_DEFAULT,
+  MINUTES_IN_HOUR,
+  VIDEO_PREVIEW_DELAY,
   AppRoute,
   AuthorizationStatus,
   FilmTabNames,

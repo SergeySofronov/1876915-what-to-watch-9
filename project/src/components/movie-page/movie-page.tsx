@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
@@ -15,7 +15,7 @@ import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
 
 type PropsTypes = {
-  mocks: FilmsDataType;
+  films: FilmsDataType;
 };
 
 const getTabContent = (activeTab: string, film: FilmType) => {
@@ -30,24 +30,17 @@ const getTabContent = (activeTab: string, film: FilmType) => {
   }
 };
 
-
-function MoviePage({ mocks }: PropsTypes): JSX.Element {
+function MoviePage({ films }: PropsTypes): JSX.Element {
   const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
   const id = Number(useParams().id);
-  const film = mocks.find((mock) => mock.id === id);
+  const film = films.find((filmItem) => filmItem.id === id);
+
+  useEffect(() => setActiveTab(FilmTabNames[0]), [film?.id]);
+
   if (!film) {
     return <NotFoundPage />;
   }
 
-  const tabChangeHandler: MouseEventHandler = (evt) => {
-    const target = evt.target as HTMLAnchorElement;
-    const tagName = target.tagName;
-    const tagText = target.textContent;
-
-    if ((tagName === 'A') && (activeTab !== tagText)) {
-      setActiveTab(tagText ? tagText : '');
-    }
-  };
 
   return (
     <React.Fragment>
@@ -79,7 +72,12 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
 
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
-                <FilmTabs textContent={FilmTabNames} className={'film-nav__'} tabChangeHandler={tabChangeHandler} activeTab={activeTab} />
+                <FilmTabs
+                  textContent={FilmTabNames}
+                  className={'film-nav__'}
+                  tabChangeHandler={(tabName) => setActiveTab(tabName)}
+                  activeTab={activeTab}
+                />
               </nav>
               {getTabContent(activeTab, film)}
             </div>
@@ -91,7 +89,7 @@ function MoviePage({ mocks }: PropsTypes): JSX.Element {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList mocks={mocks.filter((mock) => (mock.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
+          <FilmsList films={films.filter((filmItem) => (filmItem.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
         </section>
         <Footer />
       </div>
