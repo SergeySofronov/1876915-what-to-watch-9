@@ -1,6 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
-import { AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import ReviewForm from '../review-form/review-form';
@@ -40,7 +39,7 @@ function ReviewPage({ films }: PropsTypes): JSX.Element {
             </ul>
           </nav>
 
-          <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+          <Avatar />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

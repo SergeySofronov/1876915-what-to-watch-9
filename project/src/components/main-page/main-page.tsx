@@ -1,5 +1,4 @@
 import React from 'react';
-import { AuthorizationStatus } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
@@ -24,7 +23,7 @@ function MainPage({ films }: PropsTypes): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-          <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+          <Avatar />
         </header>
 
         <div className="film-card__wrap">

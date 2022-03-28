@@ -7,6 +7,16 @@ const FILM_STARRING_MAX = 4;
 const FILM_GENRE_DEFAULT = 'All genres';
 const FILM_TAB_DEFAULT = 'Overview';
 
+const TIMEOUT_SHOW_ERROR = 2000;
+
+enum APIRoute {
+  Films = '/films',
+  PromoFilm = '/promo',
+  Comments = '/comments/',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -30,15 +40,21 @@ enum FilmRating {
   Awesome = 'Awesome',
 }
 
-const FilmScores = {
-  BAD: 0,
-  NORMAL: 3,
-  GOOD: 5,
-  VERY_GOOD: 8,
-  AWESOME: 10,
-};
+enum FilmScores {
+  Bad = 0,
+  Normal = 3,
+  Good = 5,
+  VeryGood = 8,
+  Awesome = 10,
+}
 
-const FilmTabNames = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
+enum HttpErrorCode {
+  BadRequest = 400,
+  UnAuthorized = 401,
+  NotFound = 404,
+}
+
+const filmTabNames = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
 
 export {
   FILM_RATING_MAX,
@@ -49,9 +65,12 @@ export {
   FILM_TAB_DEFAULT,
   MINUTES_IN_HOUR,
   VIDEO_PREVIEW_DELAY,
+  APIRoute,
   AppRoute,
   AuthorizationStatus,
-  FilmTabNames,
+  filmTabNames,
   FilmScores,
-  FilmRating
+  FilmRating,
+  HttpErrorCode,
+  TIMEOUT_SHOW_ERROR
 };

@@ -7,19 +7,19 @@ type PropsTypes = {
 };
 
 const getRatingLevel = (rating: number) => {
-  if (rating === FilmScores.AWESOME) {
+  if (rating === FilmScores.Awesome) {
     return FilmRating.Awesome;
   }
 
-  if (rating >= FilmScores.VERY_GOOD) {
+  if (rating >= FilmScores.VeryGood) {
     return FilmRating.VeryGood;
   }
 
-  if (rating >= FilmScores.GOOD) {
+  if (rating >= FilmScores.Good) {
     return FilmRating.Good;
   }
 
-  if (rating >= FilmScores.NORMAL) {
+  if (rating >= FilmScores.Normal) {
     return FilmRating.Normal;
   }
 

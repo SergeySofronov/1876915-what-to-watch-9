@@ -6,7 +6,7 @@ import { FilmsDataType } from '../../types/film-type';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
 import FilmTabs from '../../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
-import ShowMoreButton from '../../show-more-button/show-more-button';
+import ShowMoreButton from '../show-more-button/show-more-button';
 
 type PropsTypes = {
   films: FilmsDataType;
@@ -47,7 +47,7 @@ function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
         tabChangeHandler={(tabName) => {
           setButtonStatus(isButtonStatusChanged(films, tabName));
           setFilmQuantity(getFilteredFilmsQuantity(films, tabName));
-          dispatch(setActiveFilmGenre({ activeFilmGenre: tabName }));
+          dispatch(setActiveFilmGenre(tabName));
         }}
         activeTab={activeTab}
       />

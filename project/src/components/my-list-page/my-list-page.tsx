@@ -1,4 +1,3 @@
-import { AuthorizationStatus } from '../../const';
 import { FilmsDataType } from '../../types/film-type';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
@@ -16,7 +15,7 @@ function MyListPage({ films }: PropsTypes): JSX.Element {
       <header className="page-header user-page__head">
         <Logo />
         <h1 className="page-title user-page__title">My list</h1>
-        <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+        <Avatar />
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>

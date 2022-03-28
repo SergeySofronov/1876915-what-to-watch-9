@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
+import { FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
-import { FilmTabNames } from '../../const';
+import { filmTabNames } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
@@ -19,7 +19,7 @@ type PropsTypes = {
 };
 
 const getTabContent = (activeTab: string, film: FilmType) => {
-  const [overview, details, reviews] = FilmTabNames;
+  const [overview, details, reviews] = filmTabNames;
   switch (activeTab) {
     case overview:
       return <MoviePageOverview film={film} />;
@@ -31,16 +31,15 @@ const getTabContent = (activeTab: string, film: FilmType) => {
 };
 
 function MoviePage({ films }: PropsTypes): JSX.Element {
-  const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
+  const [activeTab, setActiveTab] = useState(filmTabNames[0]);
   const id = Number(useParams().id);
   const film = films.find((filmItem) => filmItem.id === id);
 
-  useEffect(() => setActiveTab(FilmTabNames[0]), [film?.id]);
+  useEffect(() => setActiveTab(filmTabNames[0]), [film?.id]);
 
   if (!film) {
     return <NotFoundPage />;
   }
-
 
   return (
     <React.Fragment>
@@ -54,7 +53,7 @@ function MoviePage({ films }: PropsTypes): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+            <Avatar />
           </header>
 
           <div className="film-card__wrap">
@@ -73,7 +72,7 @@ function MoviePage({ films }: PropsTypes): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <FilmTabs
-                  textContent={FilmTabNames}
+                  textContent={filmTabNames}
                   className={'film-nav__'}
                   tabChangeHandler={(tabName) => setActiveTab(tabName)}
                   activeTab={activeTab}

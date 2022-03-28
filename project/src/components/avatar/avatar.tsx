@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-
-type AvatarProps = {
-  authorizationStatus: AuthorizationStatus;
-}
+import { useAuthStatusSelector } from '../../hooks/selectors';
 
 const getUserAvatar = (): JSX.Element => (
   <div className="user-block__avatar">
@@ -13,7 +10,10 @@ const getUserAvatar = (): JSX.Element => (
   </div>
 );
 
-function Avatar({ authorizationStatus }: AvatarProps): JSX.Element {
+function Avatar(): JSX.Element {
+
+  const authorizationStatus = useAuthStatusSelector();
+
   return (
     <ul className="user-block">
       <li className="user-block__item">
