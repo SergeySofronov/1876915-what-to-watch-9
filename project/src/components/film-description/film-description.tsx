@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useAuthStatusSelector } from '../../hooks/selectors';
+import { AuthorizationStatus } from '../../const';
 import { FilmType } from '../../types/film-type';
 
 type PropsTypes = {
@@ -8,6 +10,7 @@ type PropsTypes = {
 
 function FilmDescription({ film, children }: PropsTypes): JSX.Element {
   const navigate = useNavigate();
+  const authorizationStatus = useAuthStatusSelector();
   return (
     <div className="film-card__desc">
       <h2 className="film-card__title">{film.name}</h2>
@@ -23,12 +26,13 @@ function FilmDescription({ film, children }: PropsTypes): JSX.Element {
           </svg>
           <span>Play</span>
         </button>
-        <button className="btn btn--list film-card__button" type="button">
-          <svg viewBox="0 0 19 20" width="19" height="20">
-            <use xlinkHref="#add"></use>
-          </svg>
-          <span>My list</span>
-        </button>
+        {(authorizationStatus === AuthorizationStatus.Auth) &&
+          <button className="btn btn--list film-card__button" type="button">
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"></use>
+            </svg>
+            <span>My list</span>
+          </button>}
         {children}
       </div>
     </div>

@@ -23,7 +23,8 @@ const handleHttpError = (error: ErrorType): void => {
         handleError(response.data.error);
         break;
       case HttpErrorCode.UnAuthorized:
-        handleError(response.data.error);
+        //todo: remove or use handleError?
+        //handleError(response.data.error);
         break;
       case HttpErrorCode.NotFound:
         handleError(response.data.error);

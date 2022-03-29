@@ -1,4 +1,7 @@
+import { Navigate } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
+import { useAuthStatusSelector } from '../../hooks/selectors';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
@@ -10,6 +13,11 @@ type PropsTypes = {
 };
 
 function MyListPage({ films }: PropsTypes): JSX.Element {
+  const authorizationStatus = useAuthStatusSelector();
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.SignIn} />;
+  }
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

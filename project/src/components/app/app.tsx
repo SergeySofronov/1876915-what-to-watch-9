@@ -26,7 +26,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<MainPage films={films} />} />
         <Route path={AppRoute.MyList} element={
-          <PrivateRoute authorizationStatus={authorizationStatus}>
+          <PrivateRoute>
             <MyListPage films={films} />
           </PrivateRoute>
         }

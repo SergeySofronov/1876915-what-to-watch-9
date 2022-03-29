@@ -39,7 +39,6 @@ const checkUserAuthorization = createAsyncThunk(
       store.dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch (error) {
       handleHttpError(error);
-      store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   },
 );
