@@ -10,10 +10,9 @@ const AUTH_TEXT_CONTENT = 'Sign out';
 const NON_AUTH_TEXT_CONTENT = 'Sign in';
 
 const getUserAvatar = (userData: UserData): JSX.Element => (
-  //todo: avatarUrl from userData
   <div className="user-block__avatar">
     <Link to={AppRoute.MyList}>
-      <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+      <img src={userData.avatarUrl} alt="User avatar" width="63" height="63" />
     </Link>
   </div>
 );

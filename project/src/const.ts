@@ -8,6 +8,8 @@ const FILM_GENRE_DEFAULT = 'All genres';
 const FILM_TAB_DEFAULT = 'Overview';
 
 const TIMEOUT_SHOW_ERROR = 2000;
+const FILM_TAB_NAMES = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
+
 
 enum APIRoute {
   Films = '/films',
@@ -54,8 +56,6 @@ enum HttpErrorCode {
   NotFound = 404,
 }
 
-const filmTabNames = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
-
 export {
   FILM_RATING_MAX,
   FILM_LIKE_THIS_MAX,
@@ -63,14 +63,14 @@ export {
   FILM_MAIN_PAGE_MAX,
   FILM_STARRING_MAX,
   FILM_TAB_DEFAULT,
+  FILM_TAB_NAMES,
   MINUTES_IN_HOUR,
   VIDEO_PREVIEW_DELAY,
+  TIMEOUT_SHOW_ERROR,
   APIRoute,
   AppRoute,
   AuthorizationStatus,
-  filmTabNames,
   FilmScores,
   FilmRating,
-  HttpErrorCode,
-  TIMEOUT_SHOW_ERROR
+  HttpErrorCode
 };
