@@ -6,7 +6,6 @@ import { UserData } from '../types/user-data';
 
 const useActiveFilmSelector = () => useSelector<State, string>((state) => state.activeFilmGenre);
 const useFilmsDataSelector = () => useSelector<State, FilmsDataType>((state) => state.filmsData);
-const useHttpErrorMessageSelector = () => useSelector<State, string>((state) => state.HttpError);
 const useAuthStatusSelector = () => useSelector<State, AuthorizationStatus>((state) => state.authorizationStatus);
 const useFilmsLoadedStatusSelector = () => useSelector<State, boolean>((state) => state.isFilmsLoaded);
 const useUserDataSelector = () => useSelector<State, UserData>((state) => state.userData);
@@ -14,7 +13,6 @@ const useUserDataSelector = () => useSelector<State, UserData>((state) => state.
 export {
   useActiveFilmSelector,
   useFilmsDataSelector,
-  useHttpErrorMessageSelector,
   useAuthStatusSelector,
   useFilmsLoadedStatusSelector,
   useUserDataSelector

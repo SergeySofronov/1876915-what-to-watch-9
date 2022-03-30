@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useAuthStatusSelector, useFilmsDataSelector, useFilmsLoadedStatusSelector } from '../../hooks/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
@@ -11,6 +11,8 @@ import MyListPage from '../my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const isFilmsDataLoaded = useFilmsLoadedStatusSelector();
@@ -22,7 +24,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path={AppRoute.Main} element={<MainPage films={films} />} />
         <Route path={AppRoute.MyList} element={
@@ -37,7 +39,7 @@ function App(): JSX.Element {
         <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter >
+    </HistoryRouter >
   );
 }
 

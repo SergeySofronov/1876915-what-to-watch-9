@@ -7,9 +7,7 @@ const FILM_STARRING_MAX = 4;
 const FILM_GENRE_DEFAULT = 'All genres';
 const FILM_TAB_DEFAULT = 'Overview';
 
-const TIMEOUT_SHOW_ERROR = 2000;
 const FILM_TAB_NAMES = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
-
 
 enum APIRoute {
   Films = '/films',
@@ -66,7 +64,6 @@ export {
   FILM_TAB_NAMES,
   MINUTES_IN_HOUR,
   VIDEO_PREVIEW_DELAY,
-  TIMEOUT_SHOW_ERROR,
   APIRoute,
   AppRoute,
   AuthorizationStatus,

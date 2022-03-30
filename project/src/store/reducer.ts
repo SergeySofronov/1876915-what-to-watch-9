@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveFilmGenre, loadFilmsData, setAuthorizationStatus, setUserData, setHttpError } from './action';
+import { setActiveFilmGenre, loadFilmsData, setAuthorizationStatus, setUserData } from './action';
 import { FILM_GENRE_DEFAULT, FILM_TAB_DEFAULT } from '../const';
 import { AuthorizationStatus } from '../const';
 import { FilmsDataType } from '../types/film-type';
@@ -10,7 +10,6 @@ type InitialState = {
   activeFilmTab: string,
   filmsData: FilmsDataType,
   authorizationStatus: AuthorizationStatus,
-  HttpError: string;
   userData: UserData;
   isFilmsLoaded: boolean;
 };
@@ -21,7 +20,6 @@ const initialState: InitialState = {
   activeFilmTab: FILM_TAB_DEFAULT,
   filmsData: [],
   authorizationStatus: AuthorizationStatus.Unknown,
-  HttpError: '',
   userData: {
     avatarUrl: '',
     email: '',
@@ -46,9 +44,6 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserData, (state, action) => {
       state.userData = action.payload;
-    })
-    .addCase(setHttpError, (state, action) => {
-      state.HttpError = action.payload;
     });
 });
 

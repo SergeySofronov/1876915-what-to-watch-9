@@ -6,18 +6,8 @@ import { handleHttpError } from '../services/error-handle';
 import { saveToken, dropToken } from '../services/token';
 import { AuthData } from '../types/api-data';
 import { UserData } from '../types/user-data';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { loadFilmsData, setAuthorizationStatus, setHttpError, setUserData } from './action';
-
-const clearHttpError = createAsyncThunk(
-  'app/clearHttpError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setHttpError('')),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { loadFilmsData, redirectToRoute, setAuthorizationStatus, setUserData } from './action';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchQuestions',
@@ -51,6 +41,7 @@ const makeUserLogIn = createAsyncThunk(
       saveToken(data.token);
       store.dispatch(setUserData(data));
       store.dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+      store.dispatch(redirectToRoute(AppRoute.Main));
     } catch (error) {
       handleHttpError(error);
       store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
@@ -71,4 +62,4 @@ const makeUserLogOut = createAsyncThunk(
   },
 );
 
-export { clearHttpError, fetchFilmsData, checkUserAuthorization, makeUserLogIn, makeUserLogOut };
+export { fetchFilmsData, checkUserAuthorization, makeUserLogIn, makeUserLogOut };

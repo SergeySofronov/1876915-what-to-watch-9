@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { checkUserAuthorization, fetchFilmsData } from './store/api-actions';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import App from './components/app/app';
-import ErrorMessage from './components/error-message/error-message';
-import { checkUserAuthorization, fetchFilmsData } from './store/api-actions';
 
 store.dispatch(fetchFilmsData());
 store.dispatch(checkUserAuthorization());
@@ -13,7 +14,7 @@ store.dispatch(checkUserAuthorization());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ErrorMessage />
+      <ToastContainer />
       <App />
     </Provider>
   </React.StrictMode>,

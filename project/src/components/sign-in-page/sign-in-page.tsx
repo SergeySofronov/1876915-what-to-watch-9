@@ -1,22 +1,14 @@
 import { FormEventHandler, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { useAuthStatusSelector } from '../../hooks/selectors';
-import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Footer from '../footer/footer';
 import { makeUserLogIn } from '../../store/api-actions';
 
 
 function SignInPage(): JSX.Element {
-  const authorizationStatus = useAuthStatusSelector();
   const dispatch = useDispatch();
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
-  if (authorizationStatus === AuthorizationStatus.Auth) {
-    return <Navigate to={AppRoute.Main} />;
-  }
 
   const onFormSubmit: FormEventHandler = (evt) => {
     evt.preventDefault();
