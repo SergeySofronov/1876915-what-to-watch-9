@@ -6,8 +6,9 @@ const FILM_LIKE_THIS_MAX = 4;
 const FILM_STARRING_MAX = 4;
 const FILM_GENRE_DEFAULT = 'All genres';
 const FILM_TAB_DEFAULT = 'Overview';
-
 const FILM_TAB_NAMES = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
+const USER_REVIEW_LENGTH_MIN = 50;
+const USER_REVIEW_LENGTH_MAX = 400;
 
 enum APIRoute {
   Films = '/films',
@@ -69,5 +70,7 @@ export {
   AuthorizationStatus,
   FilmScores,
   FilmRating,
-  HttpErrorCode
+  HttpErrorCode,
+  USER_REVIEW_LENGTH_MAX,
+  USER_REVIEW_LENGTH_MIN
 };

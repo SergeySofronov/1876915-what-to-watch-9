@@ -1,10 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { useActiveFilmSelector } from '../../hooks/selectors';
-import { setActiveFilmGenre } from '../../store/action';
+import { useDispatch } from 'react-redux';
 import { FilmsDataType } from '../../types/film-type';
+import { setActiveFilmGenre } from '../../store/action';
+import { useActiveFilmSelector } from '../../hooks/selectors';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
-import FilmTabs from '../../film-tabs/film-tabs';
+import FilmTabs from '../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 

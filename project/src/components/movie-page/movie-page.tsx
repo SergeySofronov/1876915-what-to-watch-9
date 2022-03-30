@@ -9,7 +9,7 @@ import Footer from '../footer/footer';
 import NotFoundPage from '../not-found-page/not-found-page';
 import FilmDescription from '../film-description/film-description';
 import FilmsList from '../film-list/film-list';
-import FilmTabs from '../../film-tabs/film-tabs';
+import FilmTabs from '../film-tabs/film-tabs';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
