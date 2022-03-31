@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { useAuthStatusSelector, useFilmsDataSelector, useFilmsLoadedStatusSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector, useFilmsDataSelector, useFilmsLoadedStatusSelector, usePromoFilmSelector } from '../../hooks/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 import MainPage from '../main-page/main-page';
@@ -11,35 +11,32 @@ import MyListPage from '../my-list-page/my-list-page';
 import PrivateRoute from '../private-route/private-route';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-screen/loading-screen';
-import HistoryRouter from '../history-router/history-router';
-import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const isFilmsDataLoaded = useFilmsLoadedStatusSelector();
   const authorizationStatus = useAuthStatusSelector();
   const films = useFilmsDataSelector();
+  const promoFilm = usePromoFilmSelector();
 
-  if ((authorizationStatus === AuthorizationStatus.Unknown) || (!isFilmsDataLoaded)) {
+  if ((authorizationStatus === AuthorizationStatus.Unknown) || (!isFilmsDataLoaded) || (!promoFilm)) {
     return <LoadingScreen />;
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route path={AppRoute.Main} element={<MainPage films={films} />} />
-        <Route path={AppRoute.MyList} element={
-          <PrivateRoute>
-            <MyListPage films={films} />
-          </PrivateRoute>
-        }
-        />
-        <Route path={AppRoute.SignIn} element={<SignInPage />} />
-        <Route path={AppRoute.AddReview} element={<ReviewPage films={films} />} />
-        <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
-        <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-    </HistoryRouter >
+    <Routes>
+      <Route path={AppRoute.Main} element={<MainPage films={films} promoFilm={promoFilm} />} />
+      <Route path={AppRoute.MyList} element={
+        <PrivateRoute>
+          <MyListPage films={films} />
+        </PrivateRoute>
+      }
+      />
+      <Route path={AppRoute.SignIn} element={<SignInPage />} />
+      <Route path={AppRoute.AddReview} element={<ReviewPage films={films} />} />
+      <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
+      <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
+      <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
+    </Routes>
   );
 }
 

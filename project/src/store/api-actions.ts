@@ -1,21 +1,50 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../store';
 import { store } from '../store';
-import { FilmsDataType } from '../types/film-type';
+import { FilmsDataType, FilmType } from '../types/film-type';
 import { handleHttpError } from '../services/error-handle';
 import { dropUserData, saveUserData } from '../services/token';
 import { AuthData } from '../types/api-data';
 import { UserData } from '../types/user-data';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import { loadFilmsData, redirectToRoute, setAuthorizationStatus } from './action';
+import { setFilmsData, redirectToRoute, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData } from './action';
 
 const fetchFilmsData = createAsyncThunk(
-  'data/fetchQuestions',
+  'data/fetchFilmsData',
   async () => {
     try {
       const { data } = await api.get<FilmsDataType>(APIRoute.Films);
-      store.dispatch(loadFilmsData(data));
+      //todo: специально урезал список фильма для отладки, убрать
+      // store.dispatch(setFilmsData(data));
+      store.dispatch(setFilmsData(data.slice(0, data.length / 2)));
     } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
+const fetchPromoFilm = createAsyncThunk(
+  'data/fetchPromoFilm',
+  async () => {
+    try {
+      const { data } = await api.get<FilmType>(APIRoute.PromoFilm);
+      store.dispatch(setPromoFilm(data));
+    } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
+const fetchFilm = createAsyncThunk(
+  'data/fetchFilm',
+  async (filmId: number) => {
+    try {
+      const { data } = await api.get<FilmType>(`${APIRoute.Films}/${filmId}`);
+      store.dispatch(setActiveFilm(data));
+      //todo: добавляю новый фильм в список
+      store.dispatch(addFilmData(data));
+    } catch (error) {
+      store.dispatch(redirectToRoute(AppRoute.NotFound));
       handleHttpError(error);
     }
   },
@@ -61,4 +90,11 @@ const makeUserLogOut = createAsyncThunk(
   },
 );
 
-export { fetchFilmsData, checkUserAuthorization, makeUserLogIn, makeUserLogOut };
+export {
+  fetchFilmsData,
+  fetchPromoFilm,
+  fetchFilm,
+  checkUserAuthorization,
+  makeUserLogIn,
+  makeUserLogOut
+};

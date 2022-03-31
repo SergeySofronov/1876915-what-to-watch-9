@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { useActiveFilmSelector } from '../../hooks/selectors';
 import { FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
 import { FILM_TAB_NAMES } from '../../const';
+import { fetchFilm } from '../../store/api-actions';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
-import NotFoundPage from '../not-found-page/not-found-page';
 import FilmDescription from '../film-description/film-description';
 import FilmsList from '../film-list/film-list';
 import FilmTabs from '../film-tabs/film-tabs';
@@ -30,15 +32,18 @@ const getTabContent = (activeTab: string, film: FilmType) => {
   }
 };
 
-function MoviePage({ films }: PropsTypes): JSX.Element {
+function MoviePage({ films }: PropsTypes): JSX.Element | null {
   const [activeTab, setActiveTab] = useState(FILM_TAB_NAMES[0]);
   const id = Number(useParams().id);
-  const film = films.find((filmItem) => filmItem.id === id);
+  const dispatch = useDispatch();
+  const activeFilm = useActiveFilmSelector();
+  const film = films.find((filmItem) => filmItem.id === id) || (activeFilm?.id === id ? activeFilm : null);
 
   useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), [film?.id]);
 
   if (!film) {
-    return <NotFoundPage />;
+    dispatch(fetchFilm(id));
+    return null;
   }
 
   return (
@@ -83,7 +88,6 @@ function MoviePage({ films }: PropsTypes): JSX.Element {
           </div>
         </div>
       </section>
-
 
       <div className="page-content">
         <section className="catalog catalog--like-this">

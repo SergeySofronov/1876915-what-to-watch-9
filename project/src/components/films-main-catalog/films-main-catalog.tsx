@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FilmsDataType } from '../../types/film-type';
 import { setActiveFilmGenre } from '../../store/action';
-import { useActiveFilmSelector } from '../../hooks/selectors';
+import { useActiveGenreSelector } from '../../hooks/selectors';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
 import FilmTabs from '../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
@@ -32,7 +32,7 @@ const isButtonStatusChanged = (films: FilmsDataType, tabName: string) => {
 
 function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
   const dispatch = useDispatch();
-  const activeTab = useActiveFilmSelector();
+  const activeTab = useActiveGenreSelector();
   const genres = getAllFilmGenres(films);
   const [shownFilmsQuantity, setFilmQuantity] = useState(getFilteredFilmsQuantity(films, activeTab));
   const [isButtonShown, setButtonStatus] = useState(isButtonStatusChanged(films, activeTab));

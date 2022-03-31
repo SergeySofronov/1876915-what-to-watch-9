@@ -8,10 +8,11 @@ import FilmDescription from '../film-description/film-description';
 
 type PropsTypes = {
   films: FilmsDataType;
+  promoFilm: FilmType;
 };
 
-function MainPage({ films }: PropsTypes): JSX.Element {
-  const film: FilmType = films[0];
+function MainPage({ films, promoFilm }: PropsTypes): JSX.Element {
+  const film: FilmType = promoFilm;
   return (
     <React.Fragment>
       <section className="film-card" >
