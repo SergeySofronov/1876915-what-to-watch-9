@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { useActiveFilmSelector } from '../../hooks/selectors';
+import { useActiveFilmReviewsSelector, useActiveFilmSelector, useSimilarFilmsSelector } from '../../hooks/selectors';
 import { FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
+import { CommentsDataType } from '../../types/comment-type';
 import { FILM_TAB_NAMES } from '../../const';
-import { fetchFilm } from '../../store/api-actions';
+import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
@@ -20,7 +21,7 @@ type PropsTypes = {
   films: FilmsDataType;
 };
 
-const getTabContent = (activeTab: string, film: FilmType) => {
+const getTabContent = (activeTab: string, film: FilmType, comments: CommentsDataType) => {
   const [overview, details, reviews] = FILM_TAB_NAMES;
   switch (activeTab) {
     case overview:
@@ -28,7 +29,7 @@ const getTabContent = (activeTab: string, film: FilmType) => {
     case details:
       return <MoviePageDetails film={film} />;
     case reviews:
-      return <MoviePageReviews film={film} />;
+      return <MoviePageReviews film={film} comments={comments} />;
   }
 };
 
@@ -37,9 +38,13 @@ function MoviePage({ films }: PropsTypes): JSX.Element | null {
   const id = Number(useParams().id);
   const dispatch = useDispatch();
   const activeFilm = useActiveFilmSelector();
+  const activeFilmReviews = useActiveFilmReviewsSelector();
+  const similarFilms = useSimilarFilmsSelector();
   const film = films.find((filmItem) => filmItem.id === id) || (activeFilm?.id === id ? activeFilm : null);
 
-  useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), [film?.id]);
+  useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), [id]);
+  useEffect(() => { dispatch(fetchSimilarFilms(id)); }, [dispatch, id]);
+  useEffect(() => { dispatch(fetchFilmReviews(id)); }, [dispatch, id]);
 
   if (!film) {
     dispatch(fetchFilm(id));
@@ -83,7 +88,7 @@ function MoviePage({ films }: PropsTypes): JSX.Element | null {
                   activeTab={activeTab}
                 />
               </nav>
-              {getTabContent(activeTab, film)}
+              {getTabContent(activeTab, film, activeFilmReviews)}
             </div>
           </div>
         </div>
@@ -92,7 +97,8 @@ function MoviePage({ films }: PropsTypes): JSX.Element | null {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList films={films.filter((filmItem) => (filmItem.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
+          {similarFilms &&
+            <FilmsList films={similarFilms.slice(0, FILM_LIKE_THIS_MAX)} />}
         </section>
         <Footer />
       </div>

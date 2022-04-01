@@ -13,7 +13,8 @@ const USER_REVIEW_LENGTH_MAX = 400;
 enum APIRoute {
   Films = '/films',
   PromoFilm = '/promo',
-  Comments = '/comments/',
+  Comments = '/comments',
+  SimilarFilms = '/similar',
   Login = '/login',
   Logout = '/logout',
 }
@@ -22,6 +23,7 @@ enum AppRoute {
   Main = '/',
   SignIn = '/login',
   MyList = '/mylist',
+  Films = '/films',
   Film = '/films/:id',
   AddReview = '/films/:id/review',
   Player = '/player/:id',

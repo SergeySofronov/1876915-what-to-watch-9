@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { APIRoute } from '../../const';
 import { FilmType } from '../../types/film-type';
 import VideoPlayer from '../video-player/video-player';
 
@@ -15,7 +16,7 @@ function FilmCard({ film, update, isActiveFilm }: PropsTypes): JSX.Element {
         <VideoPlayer film={film} isActiveFilm={isActiveFilm} />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${film.id}`}>{film.name}</Link>
+        <Link className="small-film-card__link" to={`${APIRoute.Films}/${film.id}`}>{film.name}</Link>
       </h3>
     </article>
   );

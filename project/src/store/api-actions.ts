@@ -7,16 +7,27 @@ import { dropUserData, saveUserData } from '../services/token';
 import { AuthData } from '../types/api-data';
 import { UserData } from '../types/user-data';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import { setFilmsData, redirectToRoute, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData } from './action';
+import { setFilmsData, redirectToRoute, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData, setSimilarFilms, setActiveFilmReviews } from './action';
+import { CommentsDataType } from '../types/comment-type';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchFilmsData',
   async () => {
     try {
       const { data } = await api.get<FilmsDataType>(APIRoute.Films);
-      //todo: специально урезал список фильма для отладки, убрать
-      // store.dispatch(setFilmsData(data));
-      store.dispatch(setFilmsData(data.slice(0, data.length / 2)));
+      store.dispatch(setFilmsData(data));
+    } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
+const fetchSimilarFilms = createAsyncThunk(
+  'data/fetchSimilarFilms',
+  async (filmId: number) => {
+    try {
+      const { data } = await api.get<FilmsDataType>(`${APIRoute.Films}/${filmId}${APIRoute.SimilarFilms}`);
+      store.dispatch(setSimilarFilms(data));
     } catch (error) {
       handleHttpError(error);
     }
@@ -41,10 +52,21 @@ const fetchFilm = createAsyncThunk(
     try {
       const { data } = await api.get<FilmType>(`${APIRoute.Films}/${filmId}`);
       store.dispatch(setActiveFilm(data));
-      //todo: добавляю новый фильм в список
       store.dispatch(addFilmData(data));
     } catch (error) {
       store.dispatch(redirectToRoute(AppRoute.NotFound));
+      handleHttpError(error);
+    }
+  },
+);
+
+const fetchFilmReviews = createAsyncThunk(
+  'data/fetchFilmReviews',
+  async (filmId: number) => {
+    try {
+      const { data } = await api.get<CommentsDataType>(`${APIRoute.Comments}/${filmId}`);
+      store.dispatch(setActiveFilmReviews(data));
+    } catch (error) {
       handleHttpError(error);
     }
   },
@@ -92,8 +114,10 @@ const makeUserLogOut = createAsyncThunk(
 
 export {
   fetchFilmsData,
+  fetchSimilarFilms,
   fetchPromoFilm,
   fetchFilm,
+  fetchFilmReviews,
   checkUserAuthorization,
   makeUserLogIn,
   makeUserLogOut
