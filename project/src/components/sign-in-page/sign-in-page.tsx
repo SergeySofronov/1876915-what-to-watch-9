@@ -4,7 +4,6 @@ import Logo from '../logo/logo';
 import Footer from '../footer/footer';
 import { makeUserLogIn } from '../../store/api-actions';
 
-
 function SignInPage(): JSX.Element {
   const dispatch = useDispatch();
   const emailRef = useRef<HTMLInputElement | null>(null);

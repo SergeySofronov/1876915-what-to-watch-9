@@ -5,10 +5,11 @@ import { FilmsDataType, FilmType } from '../types/film-type';
 import { handleHttpError } from '../services/error-handle';
 import { dropUserData, saveUserData } from '../services/token';
 import { AuthData } from '../types/api-data';
-import { UserData } from '../types/user-data';
+import { CommentData, UserData } from '../types/user-data';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
 import { setFilmsData, redirectToRoute, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData, setSimilarFilms, setActiveFilmReviews } from './action';
 import { CommentsDataType } from '../types/comment-type';
+import { AxiosResponse } from 'axios';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchFilmsData',
@@ -72,6 +73,18 @@ const fetchFilmReviews = createAsyncThunk(
   },
 );
 
+const sendFilmReview = createAsyncThunk(
+  'data/fetchFilmReviews',
+  async ({ id, comment, rating }: CommentData) => {
+    try {
+      const { data } = await api.post<CommentData, AxiosResponse<CommentsDataType>>(`${APIRoute.Comments}/${id}`, { comment, rating });
+      store.dispatch(setActiveFilmReviews(data));
+    } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
 const checkUserAuthorization = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -118,6 +131,7 @@ export {
   fetchPromoFilm,
   fetchFilm,
   fetchFilmReviews,
+  sendFilmReview,
   checkUserAuthorization,
   makeUserLogIn,
   makeUserLogOut
