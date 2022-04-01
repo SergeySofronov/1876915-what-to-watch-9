@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { CommentsDataType, CommentType } from '../../types/comment-type';
 import { FilmType } from '../../types/film-type';
-import { CommentType } from '../../types/comment-type';
 import { getRgbaColor } from '../../utils';
 
 type PropsTypes = {
   film: FilmType;
+  comments: CommentsDataType;
 };
 
 const getCommentComponent = (comment: CommentType, color: string) => {
@@ -24,18 +24,11 @@ const getCommentComponent = (comment: CommentType, color: string) => {
   );
 };
 
-function MoviePageReviews({ film }: PropsTypes): JSX.Element {
+function MoviePageReviews({ film, comments }: PropsTypes): JSX.Element {
 
-  const [comments, setComments] = useState([]);
   const halfLength = Math.round(comments.length / 2);
   const firstPart = comments.slice(0, halfLength);
   const secondPart = comments.slice(halfLength);
-
-  useEffect(() => {
-    fetch(`https://9.react.pages.academy/wtw/comments/${film.id}`)
-      .then((response) => response.json())
-      .then((commentList) => setComments(commentList));
-  }, [film.id]);
 
   return (
     <div className="film-card__reviews film-card__row">

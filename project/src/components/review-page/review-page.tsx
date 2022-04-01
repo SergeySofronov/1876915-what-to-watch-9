@@ -1,6 +1,7 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { FilmsDataType } from '../../types/film-type';
-import { AuthorizationStatus } from '../../const';
+import { useAuthStatusSelector } from '../../hooks/selectors';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import ReviewForm from '../review-form/review-form';
@@ -13,8 +14,13 @@ type PropsTypes = {
 function ReviewPage({ films }: PropsTypes): JSX.Element {
   const id = Number(useParams().id);
   const film = films.find((filmItem) => filmItem.id === id);
+  const authorizationStatus = useAuthStatusSelector();
   if (!film) {
     return <NotFoundPage />;
+  }
+
+  if (authorizationStatus !== AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.SignIn} />;
   }
 
   return (
@@ -40,7 +46,7 @@ function ReviewPage({ films }: PropsTypes): JSX.Element {
             </ul>
           </nav>
 
-          <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+          <Avatar />
         </header>
 
         <div className="film-card__poster film-card__poster--small">

@@ -1,5 +1,4 @@
 import React from 'react';
-import { AuthorizationStatus } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
@@ -9,10 +8,11 @@ import FilmDescription from '../film-description/film-description';
 
 type PropsTypes = {
   films: FilmsDataType;
+  promoFilm: FilmType;
 };
 
-function MainPage({ films }: PropsTypes): JSX.Element {
-  const film: FilmType = films[0];
+function MainPage({ films, promoFilm }: PropsTypes): JSX.Element {
+  const film: FilmType = promoFilm;
   return (
     <React.Fragment>
       <section className="film-card" >
@@ -24,7 +24,7 @@ function MainPage({ films }: PropsTypes): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-          <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+          <Avatar />
         </header>
 
         <div className="film-card__wrap">

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { AuthorizationStatus, FILM_LIKE_THIS_MAX } from '../../const';
+import { useActiveFilmReviewsSelector, useActiveFilmSelector, useSimilarFilmsSelector } from '../../hooks/selectors';
+import { FILM_LIKE_THIS_MAX } from '../../const';
 import { FilmsDataType, FilmType } from '../../types/film-type';
-import { FilmTabNames } from '../../const';
+import { CommentsDataType } from '../../types/comment-type';
+import { FILM_TAB_NAMES } from '../../const';
+import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
-import NotFoundPage from '../not-found-page/not-found-page';
 import FilmDescription from '../film-description/film-description';
 import FilmsList from '../film-list/film-list';
-import FilmTabs from '../../film-tabs/film-tabs';
+import FilmTabs from '../film-tabs/film-tabs';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageReviews from '../movie-page-reviews/movie-page-reviews';
@@ -18,29 +21,35 @@ type PropsTypes = {
   films: FilmsDataType;
 };
 
-const getTabContent = (activeTab: string, film: FilmType) => {
-  const [overview, details, reviews] = FilmTabNames;
+const getTabContent = (activeTab: string, film: FilmType, comments: CommentsDataType) => {
+  const [overview, details, reviews] = FILM_TAB_NAMES;
   switch (activeTab) {
     case overview:
       return <MoviePageOverview film={film} />;
     case details:
       return <MoviePageDetails film={film} />;
     case reviews:
-      return <MoviePageReviews film={film} />;
+      return <MoviePageReviews film={film} comments={comments} />;
   }
 };
 
-function MoviePage({ films }: PropsTypes): JSX.Element {
-  const [activeTab, setActiveTab] = useState(FilmTabNames[0]);
+function MoviePage({ films }: PropsTypes): JSX.Element | null {
+  const [activeTab, setActiveTab] = useState(FILM_TAB_NAMES[0]);
   const id = Number(useParams().id);
-  const film = films.find((filmItem) => filmItem.id === id);
+  const dispatch = useDispatch();
+  const activeFilm = useActiveFilmSelector();
+  const activeFilmReviews = useActiveFilmReviewsSelector();
+  const similarFilms = useSimilarFilmsSelector();
+  const film = films.find((filmItem) => filmItem.id === id) || (activeFilm?.id === id ? activeFilm : null);
 
-  useEffect(() => setActiveTab(FilmTabNames[0]), [film?.id]);
+  useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), [id]);
+  useEffect(() => { dispatch(fetchSimilarFilms(id)); }, [dispatch, id]);
+  useEffect(() => { dispatch(fetchFilmReviews(id)); }, [dispatch, id]);
 
   if (!film) {
-    return <NotFoundPage />;
+    dispatch(fetchFilm(id));
+    return null;
   }
-
 
   return (
     <React.Fragment>
@@ -54,7 +63,7 @@ function MoviePage({ films }: PropsTypes): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <Avatar authorizationStatus={AuthorizationStatus.Auth} />
+            <Avatar />
           </header>
 
           <div className="film-card__wrap">
@@ -73,23 +82,23 @@ function MoviePage({ films }: PropsTypes): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <FilmTabs
-                  textContent={FilmTabNames}
+                  textContent={FILM_TAB_NAMES}
                   className={'film-nav__'}
                   tabChangeHandler={(tabName) => setActiveTab(tabName)}
                   activeTab={activeTab}
                 />
               </nav>
-              {getTabContent(activeTab, film)}
+              {getTabContent(activeTab, film, activeFilmReviews)}
             </div>
           </div>
         </div>
       </section>
 
-
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList films={films.filter((filmItem) => (filmItem.genre === film.genre)).slice(0, FILM_LIKE_THIS_MAX)} />
+          {similarFilms &&
+            <FilmsList films={similarFilms.slice(0, FILM_LIKE_THIS_MAX)} />}
         </section>
         <Footer />
       </div>

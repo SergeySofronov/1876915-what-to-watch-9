@@ -1,12 +1,12 @@
-import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { useActiveFilmSelector } from '../../hooks/selectors';
-import { setActiveFilmGenre } from '../../store/action';
+import { useDispatch } from 'react-redux';
 import { FilmsDataType } from '../../types/film-type';
+import { setActiveFilmGenre } from '../../store/action';
+import { useActiveGenreSelector } from '../../hooks/selectors';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
-import FilmTabs from '../../film-tabs/film-tabs';
+import FilmTabs from '../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';
-import ShowMoreButton from '../../show-more-button/show-more-button';
+import ShowMoreButton from '../show-more-button/show-more-button';
 
 type PropsTypes = {
   films: FilmsDataType;
@@ -32,7 +32,7 @@ const isButtonStatusChanged = (films: FilmsDataType, tabName: string) => {
 
 function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
   const dispatch = useDispatch();
-  const activeTab = useActiveFilmSelector();
+  const activeTab = useActiveGenreSelector();
   const genres = getAllFilmGenres(films);
   const [shownFilmsQuantity, setFilmQuantity] = useState(getFilteredFilmsQuantity(films, activeTab));
   const [isButtonShown, setButtonStatus] = useState(isButtonStatusChanged(films, activeTab));
@@ -47,7 +47,7 @@ function FilmsMainCatalog({ films }: PropsTypes): JSX.Element {
         tabChangeHandler={(tabName) => {
           setButtonStatus(isButtonStatusChanged(films, tabName));
           setFilmQuantity(getFilteredFilmsQuantity(films, tabName));
-          dispatch(setActiveFilmGenre({ activeFilmGenre: tabName }));
+          dispatch(setActiveFilmGenre(tabName));
         }}
         activeTab={activeTab}
       />

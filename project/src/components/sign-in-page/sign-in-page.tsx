@@ -1,7 +1,22 @@
+import { FormEventHandler, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import Logo from '../logo/logo';
 import Footer from '../footer/footer';
+import { makeUserLogIn } from '../../store/api-actions';
+
 
 function SignInPage(): JSX.Element {
+  const dispatch = useDispatch();
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const onFormSubmit: FormEventHandler = (evt) => {
+    evt.preventDefault();
+    if (emailRef.current && passwordRef.current) {
+      dispatch(makeUserLogIn({ login: emailRef.current.value, password: passwordRef.current.value }));
+    }
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -11,14 +26,14 @@ function SignInPage(): JSX.Element {
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form action="#" className="sign-in__form" onSubmit={onFormSubmit}>
           <div className="sign-in__fields">
             <div className="sign-in__field">
-              <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+              <input ref={emailRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" required />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
             <div className="sign-in__field">
-              <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+              <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" required />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
           </div>
