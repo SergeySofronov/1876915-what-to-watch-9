@@ -6,4 +6,10 @@ type UserData = {
   token: string;
 };
 
-export { type UserData };
+type CommentData = {
+  id: number;
+  comment: string;
+  rating: number;
+}
+
+export { type UserData, type CommentData };
