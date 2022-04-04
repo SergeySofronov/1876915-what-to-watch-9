@@ -531,6 +531,8 @@ main {
   text-decoration: none;
   position: relative;
   padding-bottom: 15px;
+  background-color: transparent;
+  border-color: transparent;
   -webkit-transition: font-weight;
   transition: font-weight; }
   .catalog__genres-link::after {
@@ -539,10 +541,11 @@ main {
     z-index: 1;
     left: 0;
     right: 0;
-    height: 1px;
+    height: 4px;
     bottom: 0;
     background: #D9CD8D;
     display: none; }
+  .catalog__genres-link:hover{cursor: pointer;}
   .catalog__genres-link:hover::after {
     display: block; }
 
@@ -851,7 +854,10 @@ main {
   display: block;
   color: #EEE5B5;
   text-decoration: none;
+  background-color: transparent;
+  border-color: transparent;
   position: relative;
+  margin-bottom: -2px;
   padding-bottom: 19px; }
   .film-nav__link::after {
     content: '';
@@ -863,6 +869,7 @@ main {
     bottom: 0;
     background: #EEE5B5;
     display: none; }
+  .film-nav__link:hover{cursor: pointer;}
   .film-nav__link:hover::after {
     display: block; }
 

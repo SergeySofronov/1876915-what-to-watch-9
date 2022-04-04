@@ -1,13 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { setActiveFilmGenre, setFilmsData, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData, setSimilarFilms, setActiveFilmReviews } from './action';
-import { FILM_GENRE_DEFAULT, FILM_TAB_DEFAULT } from '../const';
+import { FILM_GENRE_DEFAULT } from '../const';
 import { AuthorizationStatus } from '../const';
 import { FilmsDataType, FilmType } from '../types/film-type';
 import { CommentsDataType } from '../types/comment-type';
 
 type InitialState = {
   activeFilmGenre: string;
-  activeFilmTab: string;
   activeFilm: FilmType | null;
   activeFilmReviews: CommentsDataType;
   filmsData: FilmsDataType;
@@ -20,13 +19,11 @@ type InitialState = {
 
 const initialState: InitialState = {
   activeFilmGenre: FILM_GENRE_DEFAULT,
-  activeFilmTab: FILM_TAB_DEFAULT,
   activeFilm: null,
   activeFilmReviews: [],
   filmsData: [],
   similarFilms: [],
   promoFilm: null,
-
   authorizationStatus: AuthorizationStatus.Unknown,
   isFilmsLoaded: false,
 };

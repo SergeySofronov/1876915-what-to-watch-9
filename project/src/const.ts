@@ -59,6 +59,12 @@ enum HttpErrorCode {
   NotFound = 404,
 }
 
+enum NameSpace {
+  data = 'DATA',
+  film = 'film',
+  user = 'USER',
+}
+
 export {
   FILM_RATING_MAX,
   FILM_RATING_MIN,
@@ -77,5 +83,6 @@ export {
   FilmRating,
   HttpErrorCode,
   USER_REVIEW_LENGTH_MAX,
-  USER_REVIEW_LENGTH_MIN
+  USER_REVIEW_LENGTH_MIN,
+  NameSpace
 };
