@@ -1,15 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosResponse } from 'axios';
 import { api } from '../store';
 import { store } from '../store';
-import { FilmsDataType, FilmType } from '../types/film-type';
-import { handleHttpError } from '../services/error-handle';
-import { dropUserData, saveUserData } from '../services/token';
 import { AuthData } from '../types/api-data';
-import { CommentData, UserData } from '../types/user-data';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import { setFilmsData, redirectToRoute, setAuthorizationStatus, setPromoFilm, setActiveFilm, addFilmData, setSimilarFilms, setActiveFilmReviews } from './action';
+import { redirectToRoute } from './action';
+import { handleHttpError } from '../services/error-handle';
 import { CommentsDataType } from '../types/comment-type';
-import { AxiosResponse } from 'axios';
+import { setAuthorizationStatus } from './user-process/user-process';
+import { FilmsDataType, FilmType } from '../types/film-type';
+import { CommentData, UserData } from '../types/user-data';
+import { dropUserData, saveUserData } from '../services/token';
+import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
+import { addFilmData, setActiveFilm, setActiveFilmReviews, setFilmsData, setPromoFilm, setSimilarFilms } from './films-process-data/films-process-data';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchFilmsData',

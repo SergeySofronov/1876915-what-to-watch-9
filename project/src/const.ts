@@ -61,7 +61,7 @@ enum HttpErrorCode {
 
 enum NameSpace {
   data = 'DATA',
-  film = 'film',
+  film = 'FILM',
   user = 'USER',
 }
 

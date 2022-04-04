@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { FilmType } from '../../types/film-type';
 import { CommentsDataType } from '../../types/comment-type';
 import { FILM_TAB_NAMES } from '../../const';
