@@ -42,8 +42,9 @@ function FilmStars({ rating, onChange }: PropsTypes): JSX.Element {
                 value={index}
                 defaultChecked={Math.floor(rating) === index}
                 onChange={(evt) => {
-                  onChange(Number(evt.target.value));
-                  setRating(Number(evt.target.value));
+                  const value = Number(evt.target.value);
+                  onChange(value);
+                  setRating(value);
                 }}
               />
               <label className="rating__label" htmlFor={`star-${index}`}>{`Rating ${index}`}</label>

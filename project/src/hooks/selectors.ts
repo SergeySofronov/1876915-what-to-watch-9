@@ -1,20 +1,19 @@
 import { useSelector } from 'react-redux';
-import { State } from '../types/state';
-import { FilmsDataType, FilmType } from '../types/film-type';
-import { AuthorizationStatus } from '../const';
-import { CommentsDataType } from '../types/comment-type';
+import { FilmsProcessData, State } from '../types/state';
+import { AuthorizationStatus, NameSpace } from '../const';
 
-const useActiveGenreSelector = () => useSelector<State, string>((state) => state.FILM.activeFilmGenre);
+const useActiveGenreSelector = () => useSelector<State, string>((state) => state[NameSpace.film].activeFilmGenre);
 
-const useAuthStatusSelector = () => useSelector<State, AuthorizationStatus>((state) => state.USER.authorizationStatus);
+const useAuthStatusSelector = () => useSelector<State, AuthorizationStatus>((state) => state[NameSpace.user].authorizationStatus);
 
-const useActiveFilmSelector = () => useSelector<State, FilmType | null>((state) => state.DATA.activeFilm);
-const useActiveFilmReviewsSelector = () => useSelector<State, CommentsDataType>((state) => state.DATA.activeFilmReviews);
-const useFilmsDataSelector = () => useSelector<State, FilmsDataType>((state) => state.DATA.filmsData);
-const useSimilarFilmsSelector = () => useSelector<State, FilmsDataType>((state) => state.DATA.similarFilms);
-const usePromoFilmSelector = () => useSelector<State, FilmType | null>((state) => state.DATA.promoFilm);
-const useFilmsLoadedStatusSelector = () => useSelector<State, boolean>((state) => state.DATA.isFilmsLoaded);
+const useFilmDataState = () => useSelector<State, FilmsProcessData>((state) => state[NameSpace.data]);
 
+const useActiveFilmSelector = () => useFilmDataState().activeFilm;
+const useActiveFilmReviewsSelector = () => useFilmDataState().activeFilmReviews;
+const useFilmsDataSelector = () => useFilmDataState().filmsData;
+const useSimilarFilmsSelector = () => useFilmDataState().similarFilms;
+const usePromoFilmSelector = () => useFilmDataState().promoFilm;
+const useFilmsLoadedStatusSelector = () => useFilmDataState().isFilmsLoaded;
 
 export {
   useActiveGenreSelector,
