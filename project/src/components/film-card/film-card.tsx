@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { APIRoute } from '../../const';
 import { FilmType } from '../../types/film-type';
@@ -22,4 +23,4 @@ function FilmCard({ film, update, isActiveFilm }: PropsTypes): JSX.Element {
   );
 }
 
-export default FilmCard;
+export default memo(FilmCard);

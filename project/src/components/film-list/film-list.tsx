@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FilmsDataType } from '../../types/film-type';
 import FilmCard from '../film-card/film-card';
 
@@ -11,7 +11,7 @@ function FilmsList({ films }: PropsTypes): JSX.Element {
 
   const [activeFilmId, setActiveFilm] = useState(NaN);
 
-  const updateActiveFilm = (id = NaN) => setActiveFilm(id);
+  const updateActiveFilm = useCallback((id = NaN) => setActiveFilm(id), []);
 
   return (
     <div className="catalog__films-list" >

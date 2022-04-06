@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStatusSelector } from '../../hooks/selectors';
 import { AuthorizationStatus } from '../../const';
@@ -41,5 +42,5 @@ function FilmDescription({ film, children }: PropsTypes): JSX.Element {
   );
 }
 
-export default FilmDescription;
+export default memo(FilmDescription);
 
