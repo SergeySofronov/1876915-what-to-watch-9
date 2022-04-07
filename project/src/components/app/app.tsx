@@ -27,14 +27,14 @@ function App(): JSX.Element {
       <Route path={AppRoute.Main} element={<MainPage films={films} promoFilm={promoFilm} />} />
       <Route path={AppRoute.MyList} element={
         <PrivateRoute>
-          <MyListPage films={films} />
+          <MyListPage />
         </PrivateRoute>
       }
       />
       <Route path={AppRoute.SignIn} element={<SignInPage />} />
-      <Route path={AppRoute.AddReview} element={<ReviewPage films={films} />} />
-      <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
-      <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
+      <Route path={AppRoute.AddReview} element={<ReviewPage />} />
+      <Route path={AppRoute.Film} element={<MoviePage />} />
+      <Route path={AppRoute.Player} element={<PlayerPage />} />
       <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
     </Routes>
   );

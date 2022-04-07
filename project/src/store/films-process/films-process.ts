@@ -7,7 +7,7 @@ const initialState: FilmProcess = {
 };
 
 const filmProcess = createSlice({
-  name: NameSpace.film,
+  name: NameSpace.Film,
   initialState,
   reducers: {
     setActiveFilmGenre: (state, action) => {

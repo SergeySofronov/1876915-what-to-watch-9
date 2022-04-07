@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import browserHistory from './browser-history';
 import { Provider } from 'react-redux';
+import browserHistory from './browser-history';
 import { store } from './store';
 import { checkUserAuthorization, fetchFilmsData, fetchPromoFilm } from './store/api-actions';
 import { ToastContainer } from 'react-toastify';

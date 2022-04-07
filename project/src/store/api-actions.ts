@@ -8,10 +8,10 @@ import { handleHttpError } from '../services/error-handle';
 import { CommentsDataType } from '../types/comment-type';
 import { setAuthorizationStatus } from './user-process/user-process';
 import { FilmsDataType, FilmType } from '../types/film-type';
-import { CommentData, UserData } from '../types/user-data';
+import { CommentData, FavoriteData, UserData } from '../types/user-data';
 import { dropUserData, saveUserData } from '../services/token';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import { addFilmData, setActiveFilm, setActiveFilmReviews, setFilmsData, setPromoFilm, setSimilarFilms } from './films-process-data/films-process-data';
+import { addFilmData, changeFilmFavoriteStatus, setFavoriteFilmsData, setFilmReviews, setFilmsData, setPromoFilm, setSimilarFilms } from './films-process-data/films-process-data';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchFilmsData',
@@ -25,11 +25,23 @@ const fetchFilmsData = createAsyncThunk(
   },
 );
 
+const fetchFavoriteFilmsData = createAsyncThunk(
+  'data/fetchFavoriteFilmsData',
+  async () => {
+    try {
+      const { data } = await api.get<FilmsDataType>(APIRoute.Favorite);
+      store.dispatch(setFavoriteFilmsData(data));
+    } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
 const fetchSimilarFilms = createAsyncThunk(
   'data/fetchSimilarFilms',
-  async (filmId: number) => {
+  async (id: number) => {
     try {
-      const { data } = await api.get<FilmsDataType>(`${APIRoute.Films}/${filmId}${APIRoute.SimilarFilms}`);
+      const { data } = await api.get<FilmsDataType>(`${APIRoute.Films}/${id}${APIRoute.SimilarFilms}`);
       store.dispatch(setSimilarFilms(data));
     } catch (error) {
       handleHttpError(error);
@@ -51,10 +63,9 @@ const fetchPromoFilm = createAsyncThunk(
 
 const fetchFilm = createAsyncThunk(
   'data/fetchFilm',
-  async (filmId: number) => {
+  async (id: number) => {
     try {
-      const { data } = await api.get<FilmType>(`${APIRoute.Films}/${filmId}`);
-      store.dispatch(setActiveFilm(data));
+      const { data } = await api.get<FilmType>(`${APIRoute.Films}/${id}`);
       store.dispatch(addFilmData(data));
     } catch (error) {
       store.dispatch(redirectToRoute(AppRoute.NotFound));
@@ -63,12 +74,24 @@ const fetchFilm = createAsyncThunk(
   },
 );
 
+const changeFavoriteStatus = createAsyncThunk(
+  'data/changeFavoriteStatus',
+  async ({ id, isFavorite }: FavoriteData) => {
+    try {
+      const { data } = await api.post<boolean, AxiosResponse<FilmType>>(`${APIRoute.Favorite}/${id}/${Number(isFavorite)}`);
+      store.dispatch(changeFilmFavoriteStatus(data));
+    } catch (error) {
+      handleHttpError(error);
+    }
+  },
+);
+
 const fetchFilmReviews = createAsyncThunk(
   'data/fetchFilmReviews',
-  async (filmId: number) => {
+  async (id: number) => {
     try {
-      const { data } = await api.get<CommentsDataType>(`${APIRoute.Comments}/${filmId}`);
-      store.dispatch(setActiveFilmReviews(data));
+      const { data } = await api.get<CommentsDataType>(`${APIRoute.Comments}/${id}`);
+      store.dispatch(setFilmReviews(data));
     } catch (error) {
       handleHttpError(error);
     }
@@ -80,7 +103,7 @@ const sendFilmReview = createAsyncThunk(
   async ({ id, comment, rating }: CommentData) => {
     try {
       const { data } = await api.post<CommentData, AxiosResponse<CommentsDataType>>(`${APIRoute.Comments}/${id}`, { comment, rating });
-      store.dispatch(setActiveFilmReviews(data));
+      store.dispatch(setFilmReviews(data));
     } catch (error) {
       handleHttpError(error);
     }
@@ -129,10 +152,12 @@ const makeUserLogOut = createAsyncThunk(
 
 export {
   fetchFilmsData,
+  fetchFavoriteFilmsData,
   fetchSimilarFilms,
   fetchPromoFilm,
   fetchFilm,
   fetchFilmReviews,
+  changeFavoriteStatus,
   sendFilmReview,
   checkUserAuthorization,
   makeUserLogIn,

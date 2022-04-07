@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { ForwardedRef, forwardRef, memo, useEffect, useRef } from 'react';
 import { FilmType } from '../../types/film-type';
 import { VIDEO_PREVIEW_DELAY } from '../../const';
 
 type PropsTypes = {
   film: FilmType;
   isActiveFilm?: boolean;
+  isFullPlayer?: boolean;
 };
 
-function VideoPlayer({ film, isActiveFilm }: PropsTypes): JSX.Element {
-
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+function VideoPlayer({ film, isActiveFilm = true, isFullPlayer = false }: PropsTypes, ref: ForwardedRef<HTMLVideoElement>) {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     let delay: NodeJS.Timeout;
@@ -26,16 +26,15 @@ function VideoPlayer({ film, isActiveFilm }: PropsTypes): JSX.Element {
 
   return (
     <video
-      ref={videoRef}
+      ref={ref ? ref : videoRef}
       src={film.previewVideoLink}
       className="player__video"
       poster={film.previewImage}
       preload={'auto'}
-      loop
-      muted
-    >
-    </video>
+      loop={!isFullPlayer}
+      muted={!isFullPlayer}
+    />
   );
 }
 
-export default VideoPlayer;
+export default memo(forwardRef(VideoPlayer));

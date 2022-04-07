@@ -14,9 +14,9 @@ type FilmProcess = {
 }
 
 type FilmsProcessData = {
-  activeFilm: FilmType | null;
   activeFilmReviews: CommentsDataType;
   filmsData: FilmsDataType;
+  favoriteFilmsData: FilmsDataType;
   similarFilms: FilmsDataType;
   promoFilm: FilmType | null;
   isFilmsLoaded: boolean;

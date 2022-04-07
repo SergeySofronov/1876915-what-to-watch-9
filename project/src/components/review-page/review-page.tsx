@@ -1,20 +1,16 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
-import { FilmsDataType } from '../../types/film-type';
+import { Link, Navigate } from 'react-router-dom';
 import { useAuthStatusSelector } from '../../hooks/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import ReviewForm from '../review-form/review-form';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { useSearchFilmById } from '../../hooks/search-film-by-id';
 
-type PropsTypes = {
-  films: FilmsDataType;
-};
-
-function ReviewPage({ films }: PropsTypes): JSX.Element {
-  const id = Number(useParams().id);
-  const film = films.find((filmItem) => filmItem.id === id);
+function ReviewPage(): JSX.Element {
+  const { film } = useSearchFilmById();
   const authorizationStatus = useAuthStatusSelector();
+
   if (!film) {
     return <NotFoundPage />;
   }

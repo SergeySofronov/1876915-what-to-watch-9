@@ -1,19 +1,25 @@
 import { Navigate } from 'react-router-dom';
-import { FilmsDataType } from '../../types/film-type';
-import { useAuthStatusSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector, useFavoriteFilmsDataSelector } from '../../hooks/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';
 import Footer from '../footer/footer';
 import FilmsList from '../film-list/film-list';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { clearFavoriteFilmsData } from '../../store/films-process-data/films-process-data';
+import { fetchFavoriteFilmsData } from '../../store/api-actions';
 
-
-type PropsTypes = {
-  films: FilmsDataType;
-};
-
-function MyListPage({ films }: PropsTypes): JSX.Element {
+function MyListPage(): JSX.Element {
+  const dispatch = useDispatch();
   const authorizationStatus = useAuthStatusSelector();
+  const films = useFavoriteFilmsDataSelector();
+
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmsData());
+    return () => { dispatch(clearFavoriteFilmsData()); };
+  }, [dispatch]);
+
   if (authorizationStatus !== AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.SignIn} />;
   }

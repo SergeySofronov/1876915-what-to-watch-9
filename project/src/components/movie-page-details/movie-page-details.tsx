@@ -7,7 +7,7 @@ type PropsTypes = {
 };
 
 function MoviePageDetails({ film }: PropsTypes): JSX.Element {
-  const [hours, minutes] = getFilmRuntime(film.runTime);
+  const {hours, minutes} = getFilmRuntime(film.runTime);
 
   return (
     <div className="film-card__text film-card__row">

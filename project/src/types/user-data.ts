@@ -12,4 +12,9 @@ type CommentData = {
   rating: number;
 }
 
-export { type UserData, type CommentData };
+type FavoriteData = {
+  id: number;
+  isFavorite: boolean;
+}
+
+export { type UserData, type CommentData, type FavoriteData };
