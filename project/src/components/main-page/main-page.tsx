@@ -12,12 +12,11 @@ type PropsTypes = {
 };
 
 function MainPage({ films, promoFilm }: PropsTypes): JSX.Element {
-  const film: FilmType = promoFilm;
   return (
     <React.Fragment>
       <section className="film-card" >
         <div className="film-card__bg">
-          <img src={film.backgroundImage} alt={film.name} />
+          <img src={promoFilm.backgroundImage} alt={promoFilm.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -30,9 +29,9 @@ function MainPage({ films, promoFilm }: PropsTypes): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={film.posterImage} alt={`${film.name} poster`} width="218" height="327" />
+              <img src={promoFilm.posterImage} alt={`${promoFilm.name} poster`} width="218" height="327" />
             </div>
-            <FilmDescription film={film} />
+            <FilmDescription film={promoFilm} />
           </div>
         </div>
       </section>

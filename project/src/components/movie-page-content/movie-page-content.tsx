@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { FilmType } from '../../types/film-type';
 import { CommentsDataType } from '../../types/comment-type';
 import { FILM_TAB_NAMES } from '../../const';
-import { useActiveFilmReviewsSelector } from '../../hooks/selectors';
+import { useFilmReviewsSelector } from '../../hooks/selectors';
 import FilmTabs from '../film-tabs/film-tabs';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';
@@ -26,7 +26,7 @@ const getTabContent = (activeTab: string, film: FilmType, comments: CommentsData
 
 function MoviePageContent({ film }: PropsTypes): JSX.Element {
   const [activeTab, setActiveTab] = useState(FILM_TAB_NAMES[0]);
-  const activeFilmReviews = useActiveFilmReviewsSelector();
+  const activeFilmReviews = useFilmReviewsSelector();
 
   useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), []);
 

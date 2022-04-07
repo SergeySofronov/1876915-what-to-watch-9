@@ -1,9 +1,9 @@
 import { useState, FormEvent, ChangeEvent, useCallback, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FilmType } from '../../types/film-type';
 import { USER_REVIEW_LENGTH_MAX, USER_REVIEW_LENGTH_MIN } from '../../const';
-import FilmStars from '../film-stars/film-stars';
 import { sendFilmReview } from '../../store/api-actions';
+import { FilmType } from '../../types/film-type';
+import FilmStars from '../film-stars/film-stars';
 
 type PropsTypes = {
   film: FilmType;
