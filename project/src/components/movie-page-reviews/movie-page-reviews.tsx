@@ -1,28 +1,25 @@
 import { CommentsDataType, CommentType } from '../../types/comment-type';
 import { FilmType } from '../../types/film-type';
-import { getRgbaColor } from '../../utils';
+import { getCommentDate, getRgbaColor } from '../../utils';
 
 type PropsTypes = {
   film: FilmType;
   comments: CommentsDataType;
 };
 
-const getCommentComponent = (comment: CommentType, color: string) => {
-  const date = new Date(comment.date);
-  return (
-    <div key={comment.id} className="review" style={{ borderColor: color }}>
-      <blockquote className="review__quote">
-        <p className="review__text">{comment.comment}</p>
+const getCommentComponent = (comment: CommentType, color: string) => (
+  <div key={comment.id} className="review" style={{ borderColor: color }}>
+    <blockquote className="review__quote">
+      <p className="review__text">{comment.comment}</p>
 
-        <footer className="review__details">
-          <cite className="review__author">{comment.user.name}</cite>
-          <time className="review__date" dateTime={comment.date}>{`${date.getMonth()} ${date.getDay()}, ${date.getFullYear()}`}</time>
-        </footer>
-      </blockquote>
-      <div className="review__rating">{comment.rating}</div>
-    </div>
-  );
-};
+      <footer className="review__details">
+        <cite className="review__author">{comment.user.name}</cite>
+        <time className="review__date" dateTime={comment.date}>{`${getCommentDate(comment.date)}`}</time>
+      </footer>
+    </blockquote>
+    <div className="review__rating">{comment.rating}</div>
+  </div>
+);
 
 function MoviePageReviews({ film, comments }: PropsTypes): JSX.Element {
 

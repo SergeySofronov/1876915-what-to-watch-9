@@ -28,7 +28,7 @@ function MoviePageContent({ film }: PropsTypes): JSX.Element {
   const [activeTab, setActiveTab] = useState(FILM_TAB_NAMES[0]);
   const activeFilmReviews = useFilmReviewsSelector();
 
-  useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), []);
+  useEffect(() => setActiveTab(FILM_TAB_NAMES[0]), [film]);
 
   return (
     <div className="film-card__desc">
