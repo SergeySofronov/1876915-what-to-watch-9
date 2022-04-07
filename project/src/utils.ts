@@ -1,4 +1,4 @@
-import { MINUTES_IN_HOUR, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from './const';
+import { MINUTES_IN_HOUR, MONTH_NAMES, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from './const';
 import { DurationTypes } from './types/film-duration';
 
 const getFilmRuntime = (filmRuntime: number) => {
@@ -34,4 +34,13 @@ const getDurationString = ({ hours, minutes, seconds }: DurationTypes) => {
   return `-${hourString}${hourString ? ':' : ''}${minuteString}:${secondString}`;
 };
 
-export { getFilmRuntime, getRgbaColor, getFilmDuration, getDurationString };
+const getCommentDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const month = MONTH_NAMES[date.getMonth()];
+  const dayNumber = date.getDay();
+  const day = dayNumber < 10 ? `0${dayNumber}` : `${dayNumber}`;
+
+  return `${month} ${day}, ${date.getFullYear()}`;
+};
+
+export { getFilmRuntime, getRgbaColor, getFilmDuration, getDurationString, getCommentDate };

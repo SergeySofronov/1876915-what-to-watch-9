@@ -10,6 +10,7 @@ const FILM_STARRING_MAX = 4;
 const FILM_GENRE_DEFAULT = 'All genres';
 const FILM_TAB_DEFAULT = 'Overview';
 const FILM_TAB_NAMES = [FILM_TAB_DEFAULT, 'Details', 'Reviews'];
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November'];
 const USER_REVIEW_LENGTH_MIN = 50;
 const USER_REVIEW_LENGTH_MAX = 400;
 const PLAYER_PROGRESS_MAX = 100;
@@ -93,6 +94,7 @@ export {
   FILM_STARRING_MAX,
   FILM_TAB_DEFAULT,
   FILM_TAB_NAMES,
+  MONTH_NAMES,
   MINUTES_IN_HOUR,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
