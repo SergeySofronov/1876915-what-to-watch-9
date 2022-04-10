@@ -2,10 +2,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } f
 import { store } from '../store';
 import { getToken } from './token';
 import { setAuthorizationStatus } from '../store/user-process/user-process';
-import { AuthorizationStatus, HttpErrorCode } from '../const';
-
-const BASE_URL = 'https://9.react.pages.academy/wtw';
-const REQUEST_TIMEOUT = 5000;
+import { AuthorizationStatus, BASE_URL, HttpErrorCode, REQUEST_TIMEOUT } from '../const';
 
 const onRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const token = getToken();

@@ -1,5 +1,5 @@
 import { store } from '../store/index.js';
-import { AuthorizationStatus } from '../const.js';
+import { AuthorizationStatus, ReviewFormStatus } from '../const.js';
 import { FilmsDataType, FilmType } from './film-type.js';
 import { CommentsDataType } from './comment-type.js';
 
@@ -20,6 +20,7 @@ type FilmsProcessData = {
   similarFilms: FilmsDataType;
   promoFilm: FilmType | null;
   isFilmsLoaded: boolean;
+  isReviewSending: ReviewFormStatus;
 }
 
 export type { State, UserProcess, FilmProcess, FilmsProcessData };

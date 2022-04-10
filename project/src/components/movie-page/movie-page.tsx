@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSimilarFilmsSelector } from '../../hooks/selectors';
+import { useSimilarFilmsSelector } from '../../store/selectors';
 import { FILM_LIKE_THIS_MAX } from '../../const';
 import { fetchFilm, fetchFilmReviews, fetchSimilarFilms } from '../../store/api-actions';
 import Logo from '../logo/logo';

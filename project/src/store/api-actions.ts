@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { api } from '../store';
-import { store } from '../store';
+import { api, store } from '../store';
 import { AuthData } from '../types/api-data';
 import { redirectToRoute } from './action';
 import { handleHttpError } from '../services/error-handle';
@@ -10,8 +9,8 @@ import { setAuthorizationStatus } from './user-process/user-process';
 import { FilmsDataType, FilmType } from '../types/film-type';
 import { CommentData, FavoriteData, UserData } from '../types/user-data';
 import { dropUserData, saveUserData } from '../services/token';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const';
-import { addFilmData, changeFilmFavoriteStatus, setFavoriteFilmsData, setFilmReviews, setFilmsData, setPromoFilm, setSimilarFilms } from './films-process-data/films-process-data';
+import { APIRoute, AppRoute, AuthorizationStatus, ReviewFormStatus } from '../const';
+import { addFilmData, changeFilmFavoriteStatus, setFavoriteFilmsData, setFilmReviews, setFilmsData, setPromoFilm, setReviewFormStatus, setSimilarFilms } from './films-process-data/films-process-data';
 
 const fetchFilmsData = createAsyncThunk(
   'data/fetchFilmsData',
@@ -104,8 +103,11 @@ const sendFilmReview = createAsyncThunk(
     try {
       const { data } = await api.post<CommentData, AxiosResponse<CommentsDataType>>(`${APIRoute.Comments}/${id}`, { comment, rating });
       store.dispatch(setFilmReviews(data));
+      store.dispatch(redirectToRoute(`${AppRoute.Films}/${id}`));
     } catch (error) {
       handleHttpError(error);
+    } finally {
+      store.dispatch(setReviewFormStatus(ReviewFormStatus.Enabled));
     }
   },
 );

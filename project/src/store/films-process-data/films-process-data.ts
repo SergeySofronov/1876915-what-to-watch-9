@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, ReviewFormStatus } from '../../const';
 import { FilmsProcessData } from '../../types/state';
 
 const initialState: FilmsProcessData = {
@@ -9,6 +9,7 @@ const initialState: FilmsProcessData = {
   similarFilms: [],
   promoFilm: null,
   isFilmsLoaded: false,
+  isReviewSending: ReviewFormStatus.Enabled,
 };
 
 const filmProcessData = createSlice({
@@ -42,24 +43,30 @@ const filmProcessData = createSlice({
     changeFilmFavoriteStatus: (state, action) => {
       const id = action.payload.id;
       const index = state.filmsData.findIndex((film) => film.id === id);
-      if (index) {
+      if (index !== -1) {
         state.filmsData[index] = action.payload;
       }
       if (state.promoFilm?.id === id) {
         state.promoFilm = action.payload;
       }
     },
+    setReviewFormStatus: (state, action) => {
+      state.isReviewSending = action.payload;
+    },
   },
 });
 
-const { setFilmsData } = filmProcessData.actions;
-const { setFavoriteFilmsData } = filmProcessData.actions;
-const { clearFavoriteFilmsData } = filmProcessData.actions;
-const { setSimilarFilms } = filmProcessData.actions;
-const { setPromoFilm } = filmProcessData.actions;
-const { setFilmReviews } = filmProcessData.actions;
-const { addFilmData } = filmProcessData.actions;
-const { changeFilmFavoriteStatus } = filmProcessData.actions;
+const {
+  setFavoriteFilmsData,
+  clearFavoriteFilmsData,
+  setFilmsData,
+  setSimilarFilms,
+  setPromoFilm,
+  setFilmReviews,
+  addFilmData,
+  changeFilmFavoriteStatus,
+  setReviewFormStatus,
+} = filmProcessData.actions;
 
 
 export {
@@ -71,7 +78,8 @@ export {
   setPromoFilm,
   setFilmReviews,
   addFilmData,
-  changeFilmFavoriteStatus
+  changeFilmFavoriteStatus,
+  setReviewFormStatus
 };
 
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FilmsDataType } from '../../types/film-type';
 import { setActiveFilmGenre } from '../../store/films-process/films-process';
-import { useActiveGenreSelector } from '../../hooks/selectors';
+import { useActiveGenreSelector } from '../../store/selectors';
 import { FILM_GENRE_DEFAULT, FILM_MAIN_PAGE_MAX } from '../../const';
 import FilmTabs from '../film-tabs/film-tabs';
 import FilmsList from '../film-list/film-list';

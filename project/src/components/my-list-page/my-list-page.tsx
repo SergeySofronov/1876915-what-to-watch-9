@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuthStatusSelector, useFavoriteFilmsDataSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector, useFavoriteFilmsDataSelector } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';

@@ -14,6 +14,7 @@ const useFavoriteFilmsDataSelector = () => useFilmDataState().favoriteFilmsData;
 const useSimilarFilmsSelector = () => useFilmDataState().similarFilms;
 const usePromoFilmSelector = () => useFilmDataState().promoFilm;
 const useFilmsLoadedStatusSelector = () => useFilmDataState().isFilmsLoaded;
+const useReviewFormStatusSelector = () => useFilmDataState().isReviewSending;
 
 export {
   useActiveGenreSelector,
@@ -23,7 +24,8 @@ export {
   useFilmReviewsSelector,
   usePromoFilmSelector,
   useAuthStatusSelector,
-  useFilmsLoadedStatusSelector
+  useFilmsLoadedStatusSelector,
+  useReviewFormStatusSelector
 };
 
 
