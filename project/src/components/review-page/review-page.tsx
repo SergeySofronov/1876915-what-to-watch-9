@@ -1,5 +1,5 @@
 import { Link, Navigate } from 'react-router-dom';
-import { useAuthStatusSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Logo from '../logo/logo';
 import Avatar from '../avatar/avatar';

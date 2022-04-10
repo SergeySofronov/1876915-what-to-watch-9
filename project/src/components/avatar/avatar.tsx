@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeUserLogOut } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAuthStatusSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector } from '../../store/selectors';
 import { getUserAvatarUrl } from '../../services/token';
 
 const AUTH_TEXT_CONTENT = 'Sign out';

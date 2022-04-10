@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { FilmType } from '../../types/film-type';
 import { CommentsDataType } from '../../types/comment-type';
 import { FILM_TAB_NAMES } from '../../const';
-import { useFilmReviewsSelector } from '../../hooks/selectors';
+import { useFilmReviewsSelector } from '../../store/selectors';
 import FilmTabs from '../film-tabs/film-tabs';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';

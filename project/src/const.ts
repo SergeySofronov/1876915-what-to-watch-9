@@ -1,8 +1,11 @@
+const BASE_URL = 'https://9.react.pages.academy/wtw';
+const REQUEST_TIMEOUT = 5000;
 const MINUTES_IN_HOUR = 60;
 const SECONDS_IN_HOUR = 3600;
 const SECONDS_IN_MINUTE = 60;
 const FILM_RATING_MAX = 10;
 const FILM_RATING_MIN = 1;
+const FILM_RATING_DEFAULT = 0;
 const VIDEO_PREVIEW_DELAY = 1000;
 const FILM_MAIN_PAGE_MAX = 8;
 const FILM_LIKE_THIS_MAX = 4;
@@ -84,10 +87,17 @@ enum VideoLoadingState {
   Done = 'Done'
 }
 
+enum ReviewFormStatus {
+  Disabled = 'Disabled',
+  Enabled = 'Enabled'
+}
 
 export {
+  BASE_URL,
+  REQUEST_TIMEOUT,
   FILM_RATING_MAX,
   FILM_RATING_MIN,
+  FILM_RATING_DEFAULT,
   FILM_LIKE_THIS_MAX,
   FILM_GENRE_DEFAULT,
   FILM_MAIN_PAGE_MAX,
@@ -112,5 +122,6 @@ export {
   PLAYER_PROGRESS_UPDATE_INTERVAL,
   NameSpace,
   PlayerState,
-  VideoLoadingState
+  VideoLoadingState,
+  ReviewFormStatus
 };

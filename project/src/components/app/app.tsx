@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { useAuthStatusSelector, useFilmsDataSelector, useFilmsLoadedStatusSelector, usePromoFilmSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector, useFilmsDataSelector, useFilmsLoadedStatusSelector, usePromoFilmSelector } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 
 import MainPage from '../main-page/main-page';

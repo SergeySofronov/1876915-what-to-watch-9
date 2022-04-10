@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useAuthStatusSelector } from '../../hooks/selectors';
+import { useAuthStatusSelector } from '../../store/selectors';
 import { AuthorizationStatus } from '../../const';
 import { FilmType } from '../../types/film-type';
 import { changeFavoriteStatus } from '../../store/api-actions';

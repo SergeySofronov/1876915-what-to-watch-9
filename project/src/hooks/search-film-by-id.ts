@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { useFilmsDataSelector } from './selectors';
+import { FilmsDataType, FilmType } from '../types/film-type';
+import { useFilmsDataSelector } from '../store/selectors';
 
 const useSearchFilmById = (id?: number) => {
   const idFromUrl = Number(useParams().id);
   const resultId = id ? id : idFromUrl;
-  const films = useFilmsDataSelector();
+  const films: FilmsDataType = useFilmsDataSelector();
 
-  return { film: films.find((filmItem) => filmItem.id === resultId), id: resultId };
+  return { film: films.find((filmItem: FilmType) => filmItem.id === resultId), id: resultId };
 };
 
 export { useSearchFilmById };
